@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def load_placeholder_cbs_data(path="placeholder_cbs_dataset.csv", year=2022):
+def load_placeholder_data(path="placeholder_cbs_dataset.csv", year=2022):
     df = pd.read_csv(path)
 
     df = df[df["Year"] == year].copy()
