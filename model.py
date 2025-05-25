@@ -1,7 +1,7 @@
 import numpy as np
 from agent import HouseholdAgent
 from network import build_net
-from data_loader import load_placeholder_cbs_data
+from data_loader import load_placeholder_data
 from collections import defaultdict
 
 class ABM:
@@ -12,7 +12,7 @@ class ABM:
                  policy_dict,
                  k_small_world,
                  net_level,
-                 load_data=load_placeholder_cbs_data
+                 load_data=load_placeholder_data
                  #similarity_fn=None
                  ):
 
