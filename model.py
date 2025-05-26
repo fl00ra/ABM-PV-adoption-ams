@@ -74,7 +74,7 @@ class ABM:
             for i, agent in enumerate(agents_sorted):
                 agent.is_targeted = (i < n_top)
 
-        elif strategy == "equity_first":
+        elif strategy == "support_vulnerable":
             # choose 20% lowest income + 20% highest elek agents
             agents_sorted = sorted(agents, key=lambda a: (a.income, -a.elek))
             n_target = int(0.2 * len(agents))

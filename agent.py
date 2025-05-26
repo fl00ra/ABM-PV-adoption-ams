@@ -155,7 +155,7 @@ class HouseholdAgent:
                 self.gain += 2000  # feed-in tariff
                 # self.visible = True 
 
-        elif strategy == "equity_first":
+        elif strategy == "support_vulnerable":
             if getattr(self, "is_targeted", False):
                 self.cost *= 0.6  
                 self.gain += 1500
@@ -181,11 +181,12 @@ class HouseholdAgent:
         mapping = {'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7}
         return mapping.get(label.upper(), 4)
 
+    # feed-in tariff may be added later
+    def _compute_gain(self, eta=0.9):
+        return eta * self.elek * self.elec_price
+
     def _compute_cost(self, C0=3000, alpha=0.1): #c0 will be updated later in the dataset
         normalized_score = (self.label_score - 1) / 6  # label:A=0, G=1
         return C0 * (1 + alpha * normalized_score)
 
-    # feed-in tariff may be added later
-    def _compute_gain(self, eta=0.9):
-        return eta * self.elek * self.elec_price
 

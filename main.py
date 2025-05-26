@@ -56,7 +56,7 @@ if __name__ == "__main__":
     strategy_list = [
         "no_policy",
         "fast_adoption",
-        "equity_first",
+        "support_vulnerable",
         "universal_nudge",
         "behavioral_first"
     ]
