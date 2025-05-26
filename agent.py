@@ -107,40 +107,6 @@ class HouseholdAgent:
         return prob, V, S, Z 
         # return prob
 
-    # def step(self, timestep=None):
-    #     """
-    #     behavioral logic for each timestep
-    #     """
-    #     self.apply_policy(timestep)
-
-    #     if self.adopted:
-    #         return
-        
-    #     prob, V, S, Z = self.compute_adoption_probability()
-    #     # p = self.compute_adoption_probability()
-    #     self.history.append(prob)
-
-    #     print(f"[T={timestep}] Agent {self.id} | P={prob:.2f}, V={V:.2f}, S={S:.2f}, Z={Z:.2f}")
-
-
-    #     # perform adoption with probability p (Bernoulli trial)
-    #     # p_threshold = 0.3
-
-    #     # if p >= p_threshold:
-    #     #     if np.random.rand() < p:
-    #     #         self.adopted = True
-    #     #         self.adoption_time = timestep
-    #     if np.random.rand() < prob:
-    #         self.adopted = True
-    #         self.adoption_time = timestep
-
-    #     if self.is_targeted and self.adopted and not self.visible:
-    #         self.visible = True
-
-    #     # randomly visible to ensure spread
-    #     elif not self.is_targeted and self.adopted and not self.visible:
-    #         if np.random.rand() < 0.3:  
-    #             self.visible = True
     
     def step(self, timestep=None):
             
