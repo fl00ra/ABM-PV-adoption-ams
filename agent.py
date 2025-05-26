@@ -181,8 +181,8 @@ class HouseholdAgent:
         mapping = {'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7}
         return mapping.get(label.upper(), 4)
 
-    def _compute_cost(self, C0=3000, alpha=0.1):
-        normalized_score = (self.label_score - 1) / 6  # A=0, G=1
+    def _compute_cost(self, C0=3000, alpha=0.1): #c0 will be updated later in the dataset
+        normalized_score = (self.label_score - 1) / 6  # label:A=0, G=1
         return C0 * (1 + alpha * normalized_score)
 
     # feed-in tariff may be added later
