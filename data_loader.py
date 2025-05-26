@@ -21,7 +21,7 @@ def load_placeholder_data(path="placeholder_cbs_dataset.csv", year=2022):
         data.append({
             "id": row["Household_ID"],
             "income": row["GESTINKH"],
-            "location_code": "0363{:02d}{:02d}".format(np.random.randint(10), np.random.randint(99)),
+            "location_code": str(row["GWBCODEJJJJ"]).zfill(8),
             "energielabel": row["Energielabel"],
             "elek_usage": row["ELEK"],
             "elec_return": row["ELEKTERUG"],
