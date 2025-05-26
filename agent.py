@@ -51,6 +51,8 @@ class HouseholdAgent:
         self.lekwi = lekwi
         self.lihezlek = lihezlek
 
+        self.inertia = np.random.beta(2, 5)
+
         self.history = []  
 
     def compute_Vi(self):
@@ -105,41 +107,72 @@ class HouseholdAgent:
         return prob, V, S, Z 
         # return prob
 
-    def step(self, timestep=None):
-        """
-        behavioral logic for each timestep
-        """
-        self.apply_policy(timestep)
+    # def step(self, timestep=None):
+    #     """
+    #     behavioral logic for each timestep
+    #     """
+    #     self.apply_policy(timestep)
 
-        if self.adopted:
-            return
+    #     if self.adopted:
+    #         return
         
-        prob, V, S, Z = self.compute_adoption_probability()
-        # p = self.compute_adoption_probability()
-        self.history.append(prob)
+    #     prob, V, S, Z = self.compute_adoption_probability()
+    #     # p = self.compute_adoption_probability()
+    #     self.history.append(prob)
 
-        print(f"[T={timestep}] Agent {self.id} | P={prob:.2f}, V={V:.2f}, S={S:.2f}, Z={Z:.2f}")
+    #     print(f"[T={timestep}] Agent {self.id} | P={prob:.2f}, V={V:.2f}, S={S:.2f}, Z={Z:.2f}")
 
 
-        # perform adoption with probability p (Bernoulli trial)
-        # p_threshold = 0.3
+    #     # perform adoption with probability p (Bernoulli trial)
+    #     # p_threshold = 0.3
 
-        # if p >= p_threshold:
-        #     if np.random.rand() < p:
-        #         self.adopted = True
-        #         self.adoption_time = timestep
-        if np.random.rand() < prob:
-            self.adopted = True
-            self.adoption_time = timestep
+    #     # if p >= p_threshold:
+    #     #     if np.random.rand() < p:
+    #     #         self.adopted = True
+    #     #         self.adoption_time = timestep
+    #     if np.random.rand() < prob:
+    #         self.adopted = True
+    #         self.adoption_time = timestep
 
-        if self.is_targeted and self.adopted and not self.visible:
-            self.visible = True
+    #     if self.is_targeted and self.adopted and not self.visible:
+    #         self.visible = True
 
-        # randomly visible to ensure spread
-        elif not self.is_targeted and self.adopted and not self.visible:
-            if np.random.rand() < 0.3:  
-                self.visible = True
+    #     # randomly visible to ensure spread
+    #     elif not self.is_targeted and self.adopted and not self.visible:
+    #         if np.random.rand() < 0.3:  
+    #             self.visible = True
     
+    def step(self, timestep=None):
+            
+            """
+            behavioral logic for each timestep, (adding inertia mechanism.
+            """
+            self.apply_policy(timestep)
+
+            if self.adopted:
+                return
+
+            prob, V, S, Z = self.compute_adoption_probability()
+            self.history.append(prob)
+
+            # reduce the probability by inertia
+            adjusted_prob = max(0, prob - self.inertia)
+
+            # Bernoulli trial for adoption
+            if np.random.rand() < adjusted_prob:
+                self.adopted = True
+                self.adoption_time = timestep
+
+            if self.adopted and not self.visible:
+                if self.is_targeted:
+                    self.visible = True
+                else:
+                    if np.random.rand() < 0.3:
+                        self.visible = True
+
+            print(f"[T={timestep}] Agent {self.id} | P={prob:.2f}, V={V:.2f}, S={S:.2f}, Z={Z:.2f}")
+
+
     
     def apply_policy(self, timestep=None):
         if self.adopted or self.policy_applied:
@@ -161,16 +194,16 @@ class HouseholdAgent:
                 self.cost *= 0.6  
                 self.gain += 1500
                 self.lambda_loss_aversion *= 0.75  
-                #self.visible = True
 
         elif strategy == "universal_nudge":
-            self.cost -= 1000 
-            self.gain += 1000
+            self.cost -= 500
+            self.gain += 500
 
         elif strategy == "behavioral_first":
             if getattr(self, "is_targeted", False):
                 self.lambda_loss_aversion *= 0.7  
-                # self.visible = True
+                self.inertia *= 0.4 
+                # self.visible = True 
         
         elif strategy == "no_policy":
             pass
