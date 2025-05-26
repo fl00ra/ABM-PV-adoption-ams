@@ -29,7 +29,19 @@ class ABM:
         self.agents = self._init_agents()
 
         # build the network
-        build_net(self.agents, level=net_level, k=k_small_world, filter_fn=None)
+        self.nx_graph = build_net(
+            self.agents,
+            level=self.net_level,
+            k=self.k_small_world,
+            filter_fn=None,
+            return_nx=True
+        )
+
+        for agent in self.agents:
+            self.nx_graph.nodes[agent.id]["adopted"] = agent.adopted
+            self.nx_graph.nodes[agent.id]["visible"] = agent.visible
+            self.nx_graph.nodes[agent.id]["income"] = agent.income
+            self.nx_graph.nodes[agent.id]["location"] = agent.location_code
 
         self._assign_targeting(self.agents)
 
