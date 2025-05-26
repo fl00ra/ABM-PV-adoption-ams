@@ -1,5 +1,5 @@
 import numpy as np
-from config import household_type_map
+from config import household_type_map, THETA
 
 class HouseholdAgent:
     def __init__(self, agent_id, model,
@@ -54,9 +54,10 @@ class HouseholdAgent:
         self.history = []  
 
     def compute_Vi(self):
-        """Vi(t) = Gi - λ * Ci"""
+        """Vi = (Gi - λ * Ci) / θ"""
         # return self.gain - self.lambda_loss_aversion * self.cost
-        return (self.gain - self.lambda_loss_aversion * self.cost) / self.cost
+        raw_V = self.gain - self.lambda_loss_aversion * self.cost
+        return raw_V / THETA
 
     
     def compute_Si(self):
