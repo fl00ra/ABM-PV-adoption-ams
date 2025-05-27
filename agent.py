@@ -186,7 +186,7 @@ class HouseholdAgent:
         return eta * self.elek * self.elec_price
 
     def _compute_cost(self, C0=3000, alpha=0.1): #c0 will be updated later in the dataset
-        normalized_score = (self.label_score - 1) / 6  # label:A=0, G=1
+        normalized_score = (self.label_score - 1) / 6  # ∈[0, 1]
         return C0 * (1 + alpha * normalized_score)
 
 
