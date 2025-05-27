@@ -13,7 +13,6 @@ class ABM:
                  k_small_world,
                  net_level,
                  load_data=load_placeholder_data
-                 #similarity_fn=None
                  ):
 
         self.n_agents = n_agents
@@ -22,7 +21,6 @@ class ABM:
         self.policy_dict = policy_dict
         self.k_small_world = k_small_world
         self.net_level = net_level
-        #self.similarity_fn = similarity_fn
 
         self.agent_data = load_data()
         self.n_agents = min(self.n_agents, len(self.agent_data))

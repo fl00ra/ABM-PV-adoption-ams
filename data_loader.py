@@ -13,7 +13,6 @@ def load_placeholder_data(path="placeholder_cbs_dataset.csv", year=2022):
         "OTHER": "nonfamily_group"
     }
     df["household_type"] = df["TYPHH31DEC"].map(type_map)
-    #df["household_type"] = df["TYPHH31DEC"].map(type_map).fillna("nonfamily_group")
 
     data = []
 
