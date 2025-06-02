@@ -1,5 +1,5 @@
 import numpy as np
-from agent import HouseholdAgent
+from agent_simple import HouseholdAgent
 from network import build_net
 from data_loader import load_placeholder_data
 from collections import defaultdict
@@ -38,7 +38,6 @@ class ABM:
 
         for agent in self.agents:
             self.nx_graph.nodes[agent.id]["adopted"] = agent.adopted
-            self.nx_graph.nodes[agent.id]["visible"] = agent.visible
             self.nx_graph.nodes[agent.id]["income"] = agent.income
             self.nx_graph.nodes[agent.id]["location"] = agent.location_code
 
@@ -48,7 +47,6 @@ class ABM:
         self.results = {
             "adoption_rate": [],
             "targeted_adoption_rate": [],
-            "visible_rate": [],
             "new_adopters": [],
         }
 
@@ -98,12 +96,13 @@ class ABM:
                 agent.is_targeted = (np.random.rand() < 0.2)
 
         elif strategy == "behavioral_first":
-            # choose 20% highest Z value
-            agents_with_Z = [(agent, agent.compute_Zi()) for agent in agents]
-            agents_sorted = sorted(agents_with_Z, key=lambda tup: tup[1], reverse=True)
+            # choose 20% agents with highest beta0 (i.e., highest latent tendency to adopt)
+            agents_with_beta0 = [(agent, agent.compute_beta0()) for agent in agents]
+            agents_sorted = sorted(agents_with_beta0, key=lambda tup: tup[1], reverse=True)
             n_top = int(0.2 * len(agents))
             for i, (agent, _) in enumerate(agents_sorted):
                 agent.is_targeted = (i < n_top)
+
 
         elif strategy == "no_policy":
             for agent in agents:
@@ -120,7 +119,6 @@ class ABM:
 
     def _record(self, t):
         n_adopted = sum(1 for a in self.agents if a.adopted)
-        n_visible = sum(1 for a in self.agents if a.visible)
 
         # compute targeted adoption rate
         targeted = [a for a in self.agents if a.is_targeted]
@@ -135,7 +133,6 @@ class ABM:
             new_adopters = n_adopted - int(prev_adopted)
 
         self.results["adoption_rate"].append(n_adopted / self.n_agents)
-        self.results["visible_rate"].append(n_visible / self.n_agents)
         self.results.setdefault("targeted_adoption_rate", []).append(targeted_rate)
         self.results["new_adopters"].append(new_adopters)
 

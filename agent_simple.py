@@ -20,7 +20,6 @@ class HouseholdAgent:
         # self.Z = Z_vector
         self.adopted = adopted
         self.is_targeted = False
-        self.visible = False
         self.policy_applied = False
 
         # spatial location 
@@ -61,55 +60,48 @@ class HouseholdAgent:
         raw_V = self.gain - self.lambda_loss_aversion * self.cost
         return raw_V / THETA
 
-    
+
     def compute_Si(self):
-        """S_i^visible(t) = (1 / n_i) * sum_j [adopted_j * σ_j]"""
+        """S_i = n_adopted / n_total"""
+        self.n_adopted_neighbors = sum(1 for neighbor in self.neighbors if neighbor.adopted)
         if self.n_neighbors == 0:
             return 0
+        return self.n_adopted_neighbors / self.n_neighbors
+    
+    def compute_beta0(self):
+        """
+        Embed structural attributes into agent-specific intercept.
+        """
+        base = 0
+        if self.income is not None:
+            base += 0.0001 * (self.income - 30000)  # income centered around 30k
+        if self.label_score is not None:
+            base += -0.1 * self.label_score  # worse label reduces base tendency
+        if self.lihe:
+            base += -0.5
+        if self.lekwi:
+            base += -0.3
+        if self.lihezlek:
+            base += -0.3
+        return base
 
-        total_effect = 0
-        for neighbor in self.neighbors:
-            if neighbor.adopted:
-                visibility_strength = 1.0 if getattr(neighbor, "visible", False) else 0.3
-                total_effect += visibility_strength
 
-        return total_effect / self.n_neighbors
-
-    # def compute_Si(self):
-    #     """S_i = n_adopted / n_total"""
-    #     self.n_adopted_neighbors = sum(1 for neighbor in self.neighbors if neighbor.adopted)
-    #     if self.n_neighbors == 0:
-    #         return 0
-    #     return self.n_adopted_neighbors / self.n_neighbors
-
-    def compute_Zi(self):
-        """Z_i = γ^T * X_i"""
-        X_i = np.array([
-            self.income / 1000,
-            int(self.lihe),
-            int(self.lekwi),
-            int(self.lihezlek)
-        ] + self.household_type_vector)
-        return np.dot(self.gamma, X_i)
-        #self.gamma = np.array([+1.5, -1.5, -1.0, -2.0, 0.5, 1.0, 0.2])
 
     def compute_adoption_probability(self):
-        """P_i(t) = sigmoid(β₀ + β₁V + β₂S + β₃Z)"""
+        """P_i(t) = sigmoid(β₀ᵢ + β₁V + β₂S)"""
         V = self.compute_Vi()
         S = self.compute_Si()
-        Z = self.compute_Zi()
-        beta = self.model.beta  # read beta from model
-        features = np.array([1, V, S, Z])  # 1: bias term beta0
-        logit = np.dot(beta, features)
+        beta = self.model.beta  # assume shape: [β₁, β₂]
+
+        beta0_i = self.compute_beta0()
+        features = np.array([V, S])
+        logit = beta0_i + np.dot(beta, features)
         prob = 1 / (1 + np.exp(-logit))
 
-        # print(f"P= {probability:.2f}, V={V:.2f}, S={S:.2f}, Z={Z:.2f}")
-        return prob, V, S, Z 
-        # return prob
+        return prob, V, S
 
     
     def step(self, timestep=None):
-            
             """
             behavioral logic for each timestep, (adding inertia mechanism.
             """
@@ -118,7 +110,7 @@ class HouseholdAgent:
             if self.adopted:
                 return
 
-            prob, V, S, Z = self.compute_adoption_probability()
+            prob, V, S = self.compute_adoption_probability()
             self.history.append(prob)
 
             # reduce the probability by inertia
@@ -129,15 +121,7 @@ class HouseholdAgent:
                 self.adopted = True
                 self.adoption_time = timestep
 
-            if self.adopted and not self.visible:
-                if self.is_targeted:
-                    self.visible = True
-                else:
-                    if np.random.rand() < 0.3:
-                        self.visible = True
-
-            print(f"[T={timestep}] Agent {self.id} | P={prob:.2f}, V={V:.2f}, S={S:.2f}, Z={Z:.2f}")
-
+            print(f"[T={timestep}] Agent {self.id} | P={prob:.2f}, V={V:.2f}, S={S:.2f}")
 
     
     def apply_policy(self, timestep=None):
@@ -153,7 +137,6 @@ class HouseholdAgent:
             if getattr(self, "is_targeted", False):
                 self.cost *= 0.8  # reduce Ci
                 self.gain += 2000  # feed-in tariff
-                # self.visible = True 
 
         elif strategy == "support_vulnerable":
             if getattr(self, "is_targeted", False):
@@ -169,7 +152,6 @@ class HouseholdAgent:
             if getattr(self, "is_targeted", False):
                 self.lambda_loss_aversion *= 0.7  
                 self.inertia *= 0.4 
-                # self.visible = True 
         
         elif strategy == "no_policy":
             pass
