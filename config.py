@@ -1,7 +1,7 @@
 n_agents = 200
 n_steps = 30
 
-beta = [-2.5, 1.2, 2.5, 0.2]  # β₀, β₁, β₂, β₃
+beta = [1.2, 2.5]  # β₁, β₂
 gamma = [0.6, -0.4, -0.3, -0.5, 0.3, 0.5, 0.2]
 # gamma = [income, lihe, lekwi, lihezlek, no_kids, with_kids, nonfamily_group]
 THETA = 1000
