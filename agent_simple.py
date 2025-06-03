@@ -1,5 +1,6 @@
 import numpy as np
 from config import household_type_map, THETA
+from scipy.stats import truncnorm
 
 class HouseholdAgent:
     def __init__(self, agent_id, model,
@@ -39,6 +40,9 @@ class HouseholdAgent:
         self.household_type_vector = household_type_map.get(household_type, [0, 0, 0])
         self.bbihj = bbihj
 
+        self.system_size = self._sample_system_size()
+        self.pv_price = self._sample_pv_price()
+        self.y_pv = self._sample_ypv()
         self.cost = self._compute_cost()
         self.gain = self._compute_gain()
 
@@ -163,12 +167,55 @@ class HouseholdAgent:
         mapping = {'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7}
         return mapping.get(label.upper(), 4)
 
-    # feed-in tariff may be added later
-    def _compute_gain(self, eta=0.9):
-        return eta * self.elek * self.elec_price
+    # # feed-in tariff may be added later
+    # def _compute_gain(self, eta=0.9):
+    #     return eta * self.elek * self.elec_price
 
-    def _compute_cost(self, C0=3000, alpha=0.1): #c0 will be updated later in the dataset
-        normalized_score = (self.label_score - 1) / 6  # ∈[0, 1]
-        return C0 * (1 + alpha * normalized_score)
+    # def _compute_cost(self, C0=3000, alpha=0.1): #c0 will be updated later in the dataset
+    #     normalized_score = (self.label_score - 1) / 6  # ∈[0, 1]
+    #     return C0 * (1 + alpha * normalized_score)
 
 
+    def _sample_system_size(self):
+        # Truncated lognormal: ln(s_i) ~ N(μ=1.28, σ=0.47), max 10 kWp
+        mu, sigma = 1.28, 0.47
+        lower, upper = 0, 10
+        s_samples = np.random.lognormal(mu, sigma, 1000)
+        s_samples = s_samples[s_samples <= upper]
+        return np.random.choice(s_samples) if len(s_samples) > 0 else 4.0
+
+    def _sample_pv_price(self):
+        return np.random.triangular(1100, 1300, 1500)
+
+    def _sample_ypv(self):
+        return np.random.triangular(850, 900, 950)
+
+    def _compute_cost(self):
+        """
+        Cost = s_i * P_pv
+        where s_i ~ Truncated Lognormal, P_pv ~ Triangular
+        """
+        return self.system_size * self.pv_price
+
+    def _compute_gain(self):
+        """
+        Gain = 
+        if Ei_gen ≤ ELEK: ELEK * P_elek
+        else: ELEK * P_elek + surplus * P_feed
+        """
+        Ei_gen = self.system_size * self.y_pv
+        self.gen_electricity = Ei_gen
+
+        elec_price = self.elec_price  # €/kWh
+        feed_in_tariff = 0.10 
+
+        if self.elek is None:
+            self.elek = 2500  # fallback default
+
+        if Ei_gen <= self.elek:
+            return Ei_gen * elec_price
+        else:
+            saved = self.elek * elec_price
+            surplus = Ei_gen - self.elek
+            exported = surplus * feed_in_tariff
+            return saved + exported
