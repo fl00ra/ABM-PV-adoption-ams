@@ -8,7 +8,7 @@ class ABM:
     def __init__(self,
                  n_agents,
                  beta,
-                 gamma,
+                #  gamma,
                  policy_dict,
                  k_small_world,
                  net_level,
@@ -18,7 +18,7 @@ class ABM:
 
         self.n_agents = n_agents
         self.beta = beta
-        self.gamma = gamma
+        # self.gamma = gamma
         self.policy_dict = policy_dict
         self.k_small_world = k_small_world
         self.net_level = net_level
@@ -58,8 +58,8 @@ class ABM:
                 agent_id=d["id"],
                 model=self,
                 income=d["income"],
-                lambda_loss_aversion=d["lambda_loss_aversion"],
-                gamma=self.gamma,
+                # lambda_loss_aversion=d["lambda_loss_aversion"],
+                # gamma=self.gamma,
                 location_code=d["location_code"],
                 energielabel=d["energielabel"],
                 elek_usage=d["elek_usage"],

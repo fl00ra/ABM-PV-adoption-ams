@@ -5,7 +5,8 @@ from scipy.stats import truncnorm
 class HouseholdAgent:
     def __init__(self, agent_id, model,
                  income,
-                 lambda_loss_aversion, gamma,
+                #  lambda_loss_aversion,
+                #  gamma,
                  location_code,
                  energielabel=None, elek_usage=None, elec_price=0.4,
                  elek_return=None, household_type=None,
@@ -16,8 +17,8 @@ class HouseholdAgent:
         self.model = model 
 
         self.income = income
-        self.lambda_loss_aversion = lambda_loss_aversion
-        self.gamma = gamma
+        # self.lambda_loss_aversion = lambda_loss_aversion
+        # self.gamma = gamma
         # self.Z = Z_vector
         self.adopted = adopted
         self.is_targeted = False
@@ -55,14 +56,16 @@ class HouseholdAgent:
         self.lihezlek = lihezlek
 
         self.inertia = np.random.beta(2, 5)
+        self.Y = self._infer_Y()
 
         self.history = []  
 
     def compute_Vi(self):
         """Vi = (Gi - λ * Ci) / θ"""
-        # return self.gain - self.lambda_loss_aversion * self.cost
-        raw_V = self.gain - self.lambda_loss_aversion * self.cost
+        # raw_V = self.gain - self.lambda_loss_aversion * self.cost
+        raw_V = self.Y * self.gain - self.cost
         return raw_V / THETA
+        # return raw_V
 
 
     def compute_Si(self):
@@ -97,12 +100,12 @@ class HouseholdAgent:
         S = self.compute_Si()
         beta = self.model.beta  # assume shape: [β₁, β₂]
 
-        beta0_i = self.compute_beta0()
+        beta0 = self.compute_beta0()
         features = np.array([V, S])
-        logit = beta0_i + np.dot(beta, features)
+        logit = beta0 + np.dot(beta, features)
         prob = 1 / (1 + np.exp(-logit))
 
-        return prob, V, S
+        return prob, V, S, beta0
 
     
     def step(self, timestep=None):
@@ -114,7 +117,7 @@ class HouseholdAgent:
             if self.adopted:
                 return
 
-            prob, V, S = self.compute_adoption_probability()
+            prob, V, S, beta0 = self.compute_adoption_probability()
             self.history.append(prob)
 
             # reduce the probability by inertia
@@ -125,7 +128,7 @@ class HouseholdAgent:
                 self.adopted = True
                 self.adoption_time = timestep
 
-            print(f"[T={timestep}] Agent {self.id} | P={prob:.2f}, V={V:.2f}, S={S:.2f}")
+            print(f"[T={timestep}] Agent {self.id} | P={prob:.2f}, Beta0={beta0:.2f}, V={V:.2f}, S={S:.2f}")
 
     
     def apply_policy(self, timestep=None):
@@ -146,7 +149,9 @@ class HouseholdAgent:
             if getattr(self, "is_targeted", False):
                 self.cost *= 0.6  
                 self.gain += 1500
-                self.lambda_loss_aversion *= 0.75  
+                # self.lambda_loss_aversion *= 0.75  
+                self.Y -= 1  # less long-term horizon
+
 
         elif strategy == "universal_nudge":
             self.cost -= 500
@@ -154,9 +159,10 @@ class HouseholdAgent:
 
         elif strategy == "behavioral_first":
             if getattr(self, "is_targeted", False):
-                self.lambda_loss_aversion *= 0.7  
+                # self.lambda_loss_aversion *= 0.7  
                 self.inertia *= 0.4 
-        
+                self.Y += 2  # simulate awareness/nudge to think long-term
+
         elif strategy == "no_policy":
             pass
 
@@ -219,3 +225,14 @@ class HouseholdAgent:
             surplus = Ei_gen - self.elek
             exported = surplus * feed_in_tariff
             return saved + exported
+
+    def _infer_Y(self):
+        base_Y = 5
+        if self.income is not None:
+            if self.income < 20000:
+                base_Y -= 1
+            elif self.income > 60000:
+                base_Y += 2
+        if self.lihe or self.lekwi or self.lihezlek:
+            base_Y -= 1.5
+        return np.clip(base_Y + np.random.normal(0, 1), 3, 10)
