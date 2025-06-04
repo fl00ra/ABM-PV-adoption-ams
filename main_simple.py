@@ -1,13 +1,13 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from model_simple import ABM
-from config import n_agents, n_steps, beta, gamma, k_small_world, net_level
+from config import n_agents, n_steps, beta, k_small_world, net_level
 
 def run_simulation(strategy_tag):
     model = ABM(
         n_agents=n_agents,
         beta=beta,
-        gamma=gamma,
+        # gamma=gamma,
         policy_dict={"strategy_tag": strategy_tag},
         k_small_world=k_small_world,
         net_level=net_level

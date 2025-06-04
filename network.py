@@ -1,6 +1,6 @@
 import random
 from collections import defaultdict
-from agent import HouseholdAgent
+from agent_simple import HouseholdAgent
 import networkx as nx
 
 # group agents by location code
@@ -25,7 +25,7 @@ def assign_local(agents, level="buurt"):
             agent.n_neighbors = len(agent.neighbors)
 
 # add long-range connections 
-def add_long_links(agents, k=4, filter_fn=None):
+def add_long_links(agents, k=2, filter_fn=None):
     id_map = {a.id: a for a in agents}
     ids = [a.id for a in agents]
 
@@ -52,7 +52,7 @@ def add_long_links(agents, k=4, filter_fn=None):
 
         agent.n_neighbors = len(agent.neighbors)
     
-def build_net(agents, level="buurt", k=4, filter_fn=None, return_nx=False):
+def build_net(agents, level="buurt", k=2, filter_fn=None, return_nx=False):
     assign_local(agents, level=level)
     add_long_links(agents, k=k, filter_fn=filter_fn)
 
