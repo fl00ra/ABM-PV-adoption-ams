@@ -1,4 +1,4 @@
-n_agents = 200
+n_agents = 5000
 n_steps = 50
 
 beta = [0.8, 1.5]  # β₁, β₂

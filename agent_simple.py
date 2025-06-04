@@ -139,29 +139,28 @@ class HouseholdAgent:
         strategy = policy.get("strategy_tag", "")
 
     # feed-in tariff may be added later
-
         if strategy == "fast_adoption":
-            if getattr(self, "is_targeted", False):
-                self.cost *= 0.8  # reduce Ci
-                self.gain += 2000  # feed-in tariff
+                if self.is_targeted:
+                    self.cost *= 0.85  # reduce Ci
+                    self.gain += 500  # feed-in tariff
 
         elif strategy == "support_vulnerable":
             if getattr(self, "is_targeted", False):
-                self.cost *= 0.6  
-                self.gain += 1500
+                self.cost *= 0.75  
+                self.gain += 200
                 # self.lambda_loss_aversion *= 0.75  
-                self.Y -= 1  # less long-term horizon
+                self.Y += 0.2  # less long-term horizon
 
 
         elif strategy == "universal_nudge":
-            self.cost -= 500
+            self.cost -= 300
             self.gain += 500
 
         elif strategy == "behavioral_first":
             if getattr(self, "is_targeted", False):
                 # self.lambda_loss_aversion *= 0.7  
-                self.inertia *= 0.4 
-                self.Y += 2  # simulate awareness/nudge to think long-term
+                self.inertia *= 0.6
+                self.Y += 1  # simulate awareness/nudge to think long-term
 
         elif strategy == "no_policy":
             pass
