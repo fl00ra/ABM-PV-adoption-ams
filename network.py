@@ -75,7 +75,6 @@ def add_long_links(agents, k=5, filter_fn=None):
     id_map = {a.id: a for a in agents}
     ids = [a.id for a in agents]
 
-    # Precompute degree centrality (current neighbor count as proxy)
     degree_weights = np.array([len(a.neighbors) for a in agents])
     degree_weights = degree_weights + 1  # prevent zero division
     prob_dist = degree_weights / degree_weights.sum()
@@ -101,7 +100,6 @@ def add_long_links(agents, k=5, filter_fn=None):
             new_links.add(candidate)
 
         agent.n_neighbors = len(agent.neighbors)
-
 
 
 

@@ -58,10 +58,13 @@ class HouseholdAgent:
         self.inertia = np.random.beta(2, 5)
         self.Y = self._infer_Y()
 
+        self.motivation_score = 0.0
+        self.adoption_threshold = 2.5  # 2.5～4.0
+
         self.history = []  
 
     def compute_Vi(self):
-        """Vi = (Gi - λ * Ci) / θ"""
+        """Vi = (Y * Gi - Ci) / θ"""
         # raw_V = self.gain - self.lambda_loss_aversion * self.cost
         raw_V = self.Y * self.gain - self.cost
         return raw_V / THETA
@@ -77,7 +80,7 @@ class HouseholdAgent:
     
     def compute_beta0(self):
         """
-        Embed structural attributes into agent-specific intercept.
+        embed structural attributes into agent-specific intercept.
         """
         base = 0
         if self.income is not None:
@@ -98,7 +101,7 @@ class HouseholdAgent:
         """P_i(t) = sigmoid(β₀ᵢ + β₁V + β₂S)"""
         V = self.compute_Vi()
         S = self.compute_Si()
-        beta = self.model.beta  # assume shape: [β₁, β₂]
+        beta = self.model.beta  # [β₁, β₂]
 
         beta0 = self.compute_beta0()
         features = np.array([V, S])
@@ -108,27 +111,53 @@ class HouseholdAgent:
         return prob, V, S, beta0
 
     
+    
     def step(self, timestep=None):
-            """
-            behavioral logic for each timestep, (adding inertia mechanism.
-            """
-            self.apply_policy(timestep)
+        """
+        behavioral logic with accumulation-based adoption
+        """
+        self.apply_policy(timestep)
 
-            if self.adopted:
-                return
+        if self.adopted:
+            return
 
-            prob, V, S, beta0 = self.compute_adoption_probability()
-            self.history.append(prob)
+        prob, V, S, beta0 = self.compute_adoption_probability()
+        self.history.append(prob)
 
-            # reduce the probability by inertia
-            adjusted_prob = max(0, prob - self.inertia)
+        # adjust by inertia
+        adjusted_prob = max(0, prob - self.inertia)
 
-            # Bernoulli trial for adoption
-            if np.random.rand() < adjusted_prob:
-                self.adopted = True
-                self.adoption_time = timestep
+        # accumulate motivation with decay (λ = 0.8)
+        self.motivation_score = 0.8 * self.motivation_score + adjusted_prob
 
-            print(f"[T={timestep}] Agent {self.id} | P={prob:.2f}, Beta0={beta0:.2f}, V={V:.2f}, S={S:.2f}")
+        # adoption decision by threshold
+        if self.motivation_score >= self.adoption_threshold:
+            self.adopted = True
+            self.adoption_time = timestep
+
+        print(f"[T={timestep}] Agent {self.id} | P={prob:.2f}, Beta0={beta0:.2f}, V={V:.2f}, S={S:.2f}, Score={self.motivation_score:.2f}")
+
+    # def step(self, timestep=None):
+    #         """
+    #         behavioral logic for each timestep, (adding inertia mechanism.
+    #         """
+    #         self.apply_policy(timestep)
+
+    #         if self.adopted:
+    #             return
+
+    #         prob, V, S, beta0 = self.compute_adoption_probability()
+    #         self.history.append(prob)
+
+    #         # reduce the probability by inertia
+    #         adjusted_prob = max(0, prob - self.inertia)
+
+    #         # Bernoulli trial for adoption
+    #         if np.random.rand() < adjusted_prob:
+    #             self.adopted = True
+    #             self.adoption_time = timestep
+
+    #         print(f"[T={timestep}] Agent {self.id} | P={prob:.2f}, Beta0={beta0:.2f}, V={V:.2f}, S={S:.2f}")
 
     
     def apply_policy(self, timestep=None):
