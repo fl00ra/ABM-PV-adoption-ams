@@ -61,6 +61,7 @@ class HouseholdAgent:
         self.motivation_score = 0.0
         self.adoption_threshold = 2.5  # 2.5～4.0
 
+        self.adoption_track = []
         self.history = []  
 
     def compute_Vi(self):
@@ -88,11 +89,11 @@ class HouseholdAgent:
         if self.label_score is not None:
             base += -0.1 * self.label_score  # worse label reduces base tendency
         if self.lihe:
-            base += -0.5
+            base += -0.3
         if self.lekwi:
             base += -0.3
         if self.lihezlek:
-            base += -0.3
+            base += -0.5
         return base
 
 
@@ -114,7 +115,7 @@ class HouseholdAgent:
     
     def step(self, timestep=None):
         """
-        behavioral logic with accumulation-based adoption
+        behavioral logic with accumulation-based adoption (adding inertia mechanism.
         """
         self.apply_policy(timestep)
 
@@ -135,31 +136,16 @@ class HouseholdAgent:
             self.adopted = True
             self.adoption_time = timestep
 
+        self.adoption_track.append(self.adopted)
+
         print(f"[T={timestep}] Agent {self.id} | P={prob:.2f}, Beta0={beta0:.2f}, V={V:.2f}, S={S:.2f}, Score={self.motivation_score:.2f}")
-
-    # def step(self, timestep=None):
-    #         """
-    #         behavioral logic for each timestep, (adding inertia mechanism.
-    #         """
-    #         self.apply_policy(timestep)
-
-    #         if self.adopted:
-    #             return
-
-    #         prob, V, S, beta0 = self.compute_adoption_probability()
-    #         self.history.append(prob)
-
-    #         # reduce the probability by inertia
-    #         adjusted_prob = max(0, prob - self.inertia)
 
     #         # Bernoulli trial for adoption
     #         if np.random.rand() < adjusted_prob:
     #             self.adopted = True
     #             self.adoption_time = timestep
 
-    #         print(f"[T={timestep}] Agent {self.id} | P={prob:.2f}, Beta0={beta0:.2f}, V={V:.2f}, S={S:.2f}")
 
-    
     def apply_policy(self, timestep=None):
         if self.adopted or self.policy_applied:
             return  
