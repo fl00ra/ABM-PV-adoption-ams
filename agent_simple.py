@@ -55,11 +55,10 @@ class HouseholdAgent:
         self.lekwi = lekwi
         self.lihezlek = lihezlek
 
-        self.inertia = np.random.beta(2, 5)
         self.Y = self._infer_Y()
 
         self.motivation_score = 0.0
-        self.adoption_threshold = 2.5  # 2.5～4.0
+        self.adoption_threshold = np.random.uniform(2.5, 4.0)
 
         self.adoption_track = []
         self.history = []  
@@ -85,15 +84,15 @@ class HouseholdAgent:
         """
         base = 0
         if self.income is not None:
-            base += 0.0001 * (self.income - 30000)  # income centered around 30k
+            base += 0.0005 * (self.income - 30000)  # income centered around 30k
         if self.label_score is not None:
             base += -0.1 * self.label_score  # worse label reduces base tendency
         if self.lihe:
-            base += -0.3
+            base += -0.2
         if self.lekwi:
-            base += -0.3
+            base += -0.2
         if self.lihezlek:
-            base += -0.5
+            base += -0.4
         return base
 
 
@@ -125,11 +124,8 @@ class HouseholdAgent:
         prob, V, S, beta0 = self.compute_adoption_probability()
         self.history.append(prob)
 
-        # adjust by inertia
-        adjusted_prob = max(0, prob - self.inertia)
-
         # accumulate motivation with decay (λ = 0.8)
-        self.motivation_score = 0.8 * self.motivation_score + adjusted_prob
+        self.motivation_score = 0.8 * self.motivation_score + prob
 
         # adoption decision by threshold
         if self.motivation_score >= self.adoption_threshold:
@@ -163,7 +159,6 @@ class HouseholdAgent:
             if getattr(self, "is_targeted", False):
                 self.cost *= 0.75  
                 self.gain += 200
-                # self.lambda_loss_aversion *= 0.75  
                 self.Y += 0.2  # less long-term horizon
 
 
@@ -173,9 +168,8 @@ class HouseholdAgent:
 
         elif strategy == "behavioral_first":
             if getattr(self, "is_targeted", False):
-                # self.lambda_loss_aversion *= 0.7  
-                self.inertia *= 0.6
-                self.Y += 1  # simulate awareness/nudge to think long-term
+                self.adoption_threshold *= 0.8  # reduce threshold
+                self.Y += 1  # simulate awareness to think long-term
 
         elif strategy == "no_policy":
             pass

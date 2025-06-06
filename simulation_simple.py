@@ -1,6 +1,6 @@
 from model_simple import ABM
 from config import n_agents, n_steps, beta, k_small_world, net_level
-from visualization import plot_all_results, plot_network_graph, plot_spatial_heatmap
+from visualization import plot_all_results #, plot_network_graph, plot_spatial_heatmap
 
 def run_simulation(strategy_tag):
     model = ABM(
@@ -34,5 +34,5 @@ if __name__ == "__main__":
     plot_all_results(all_results)
 
     focus_strategy = "support_vulnerable"
-    plot_network_graph(models_by_strategy[focus_strategy])
-    plot_spatial_heatmap(models_by_strategy[focus_strategy])
+    #plot_network_graph(models_by_strategy[focus_strategy])
+    #plot_spatial_heatmap(models_by_strategy[focus_strategy])
