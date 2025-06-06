@@ -5,8 +5,6 @@ from scipy.stats import truncnorm
 class HouseholdAgent:
     def __init__(self, agent_id, model,
                  income,
-                #  lambda_loss_aversion,
-                #  gamma,
                  location_code,
                  energielabel=None, elek_usage=None, elec_price=0.4,
                  elek_return=None, household_type=None,
@@ -17,9 +15,6 @@ class HouseholdAgent:
         self.model = model 
 
         self.income = income
-        # self.lambda_loss_aversion = lambda_loss_aversion
-        # self.gamma = gamma
-        # self.Z = Z_vector
         self.adopted = adopted
         self.is_targeted = False
         self.policy_applied = False
