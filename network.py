@@ -17,13 +17,6 @@ def group_by(agents, level="buurt"):
         group_map[key].append(agent)
     return group_map
 
-# allocate local connections within the group
-# def assign_local(agents, level="buurt"):
-#     groups = group_by(agents, level)
-#     for group in groups.values():
-#         for agent in group:
-#             agent.neighbors = [a for a in group if a.id != agent.id]
-#             agent.n_neighbors = len(agent.neighbors)
 
 def assign_local(agents, level="buurt", max_local_neighbors=5):
     groups = group_by(agents, level)
@@ -37,46 +30,12 @@ def assign_local(agents, level="buurt", max_local_neighbors=5):
             agent.neighbors = neighbors
             agent.n_neighbors = len(agent.neighbors)
 
-# # add long-range connections 
-# def add_long_links(agents, k=2, filter_fn=None):
-#     id_map = {a.id: a for a in agents}
-#     ids = [a.id for a in agents]
-
-#     for agent in agents:
-#         new_links = set()
-#         attempts = 0
-#         # while len(new_links) < k:
-#         while len(new_links) < k and attempts < 50:
-#             attempts += 1
-#             candidate = id_map[random.choice(ids)]
-
-#             if candidate.id == agent.id:
-#                 continue
-#             if candidate in agent.neighbors:
-#                 continue
-
-#             # not connect to buurt
-#             if candidate.location_code == agent.location_code:
-#                 continue
-            
-#             # defined later in model.py
-#             if filter_fn and not filter_fn(agent, candidate):
-#                 continue
-
-#             agent.neighbors.append(candidate)
-#             new_links.add(candidate)
-
-#         agent.n_neighbors = len(agent.neighbors)
-
-
-
-
 def add_long_links(agents, k=5, filter_fn=None):
     id_map = {a.id: a for a in agents}
     ids = [a.id for a in agents]
 
     degree_weights = np.array([len(a.neighbors) for a in agents])
-    degree_weights = degree_weights + 1  # prevent zero division
+    degree_weights = degree_weights + 1 
     prob_dist = degree_weights / degree_weights.sum()
 
     for agent in agents:
@@ -103,7 +62,7 @@ def add_long_links(agents, k=5, filter_fn=None):
 
 
 
-def build_net(agents, level="buurt", k=2, filter_fn=None, max_local_neighbors=5, return_nx=False):
+def build_net(agents, level="buurt", k=5, filter_fn=None, max_local_neighbors=5, return_nx=False):
     assign_local(agents, level=level, max_local_neighbors=max_local_neighbors)
     add_long_links(agents, k=k, filter_fn=filter_fn)
 
