@@ -41,6 +41,7 @@ class HouseholdAgent:
         self.y_pv = self._sample_ypv()
         self.cost = self._compute_cost()
         self.gain = self._compute_gain()
+        self.beta0 = self.compute_beta0()
 
         self.neighbors = []
         self.n_neighbors = 0
@@ -77,18 +78,20 @@ class HouseholdAgent:
         """
         embed structural attributes into agent-specific intercept.
         """
-        base = 0
-        if self.income is not None:
-            base += 0.0005 * (self.income - 30000)  # income centered around 30k
-        if self.label_score is not None:
-            base += -0.1 * self.label_score  # worse label reduces base tendency
-        if self.lihe:
-            base += -0.2
-        if self.lekwi:
-            base += -0.2
-        if self.lihezlek:
-            base += -0.4
-        return base
+        # base = -2.0
+        # if self.income is not None:
+        #     base += 0.0003 * (self.income - 30000)  # income centered around 30k
+        # if self.label_score is not None:
+        #     base += -0.05 * self.label_score  # worse label reduces base tendency
+        # if self.lihe:
+        #     base += -0.2
+        # if self.lekwi:
+        #     base += -0.2
+        # if self.lihezlek:
+        #     base += -0.3
+        # return base
+        return np.random.normal(loc=-2.0, scale=0.5)
+
 
 
 
@@ -98,7 +101,7 @@ class HouseholdAgent:
         S = self.compute_Si()
         beta = self.model.beta  # [β₁, β₂]
 
-        beta0 = self.compute_beta0()
+        beta0 = self.beta0
         features = np.array([V, S])
         logit = beta0 + np.dot(beta, features)
         prob = 1 / (1 + np.exp(-logit))
@@ -119,57 +122,71 @@ class HouseholdAgent:
         prob, V, S, beta0 = self.compute_adoption_probability()
         self.history.append(prob)
 
-        # accumulate motivation with decay (λ = 0.8)
-        self.motivation_score = 0.8 * self.motivation_score + prob
+        # # accumulate motivation with decay (λ = 0.8)
+        # self.motivation_score = 0.8 * self.motivation_score + prob
 
-        # adoption decision by threshold
-        if self.motivation_score >= self.adoption_threshold:
-            self.adopted = True
-            self.adoption_time = timestep
+        # # adoption decision by threshold
+        # if self.motivation_score >= self.adoption_threshold:
+        #     self.adopted = True
+        #     self.adoption_time = timestep
 
-        self.adoption_track.append(self.adopted)
+        # self.adoption_track.append(self.adopted)
 
         print(f"[T={timestep}] Agent {self.id} | P={prob:.2f}, Beta0={beta0:.2f}, V={V:.2f}, S={S:.2f}, Score={self.motivation_score:.2f}")
 
-    #         # Bernoulli trial for adoption
-    #         if np.random.rand() < adjusted_prob:
-    #             self.adopted = True
-    #             self.adoption_time = timestep
-
+        # Bernoulli trial for adoption
+        if np.random.rand() < prob:
+            self.adopted = True
+            self.adoption_time = timestep
 
     def apply_policy(self, timestep=None):
         if self.adopted or self.policy_applied:
             return  
-    
+
         policy = self.model.policy_dict
         strategy = policy.get("strategy_tag", "")
 
-    # feed-in tariff may be added later
-        if strategy == "fast_adoption":
-                if self.is_targeted:
-                    self.cost *= 0.85  # reduce Ci
-                    self.gain += 500  # feed-in tariff
-
-        elif strategy == "support_vulnerable":
-            if getattr(self, "is_targeted", False):
-                self.cost *= 0.75  
-                self.gain += 200
-                self.Y += 0.2  # less long-term horizon
-
-
-        elif strategy == "universal_nudge":
-            self.cost -= 300
-            self.gain += 500
-
-        elif strategy == "behavioral_first":
-            if getattr(self, "is_targeted", False):
-                self.adoption_threshold *= 0.8  # reduce threshold
-                self.Y += 1  # simulate awareness to think long-term
+        if strategy == "reduce_cost":
+            self.cost *= 0.8  
 
         elif strategy == "no_policy":
             pass
 
-        self.policy_applied = True 
+        self.policy_applied = True
+
+    # def apply_policy(self, timestep=None):
+    #     if self.adopted or self.policy_applied:
+    #         return  
+    
+    #     policy = self.model.policy_dict
+    #     strategy = policy.get("strategy_tag", "")
+
+    # # feed-in tariff may be added later
+    #     if strategy == "fast_adoption":
+    #             if self.is_targeted:
+    #                 self.cost *= 0.85  # reduce Ci
+    #                 # self.gain += 500  # feed-in tariff
+
+    #     elif strategy == "support_vulnerable":
+    #         if getattr(self, "is_targeted", False):
+    #             self.cost *= 0.8  
+    #             # self.gain += 200
+    #             # self.Y += 0.2  # less long-term horizon
+
+
+    #     elif strategy == "universal_nudge":
+    #         self.cost -= 300
+    #         # self.gain += 500
+
+    #     elif strategy == "behavioral_first":
+    #         # if getattr(self, "is_targeted", False):
+    #             # self.adoption_threshold *= 0.8  # reduce threshold
+    #             # self.Y += 1  # simulate awareness to think long-term
+    #         pass
+    #     elif strategy == "no_policy":
+    #         pass
+
+    #     self.policy_applied = True 
 
 
     def _label_to_score(self, label):
@@ -188,7 +205,7 @@ class HouseholdAgent:
     def _sample_system_size(self):
         # Truncated lognormal: ln(s_i) ~ N(μ=1.28, σ=0.47), max 10 kWp
         mu, sigma = 1.28, 0.47
-        lower, upper = 0, 10
+        upper = 10
         s_samples = np.random.lognormal(mu, sigma, 1000)
         s_samples = s_samples[s_samples <= upper]
         return np.random.choice(s_samples) if len(s_samples) > 0 else 4.0
@@ -230,7 +247,7 @@ class HouseholdAgent:
             return saved + exported
 
     def _infer_Y(self):
-        base_Y = 5
+        base_Y = 3
         if self.income is not None:
             if self.income < 20000:
                 base_Y -= 1

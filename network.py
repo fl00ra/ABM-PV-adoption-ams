@@ -17,20 +17,34 @@ def group_by(agents, level="buurt"):
         group_map[key].append(agent)
     return group_map
 
+# Total degree distribution: Poisson with λ=6
+def total_deg():
+    return max(1, np.random.poisson(lam=6))
 
-def assign_local(agents, level="buurt", max_local_neighbors=5):
+def assign_local(agents, level="buurt", local_ratio=0.7):
     groups = group_by(agents, level)
+    agent_k_map = {}
+    for agent in agents:
+        k_total = total_deg()
+        k_local = np.random.binomial(k_total, p=local_ratio)
+        k_long = k_total - k_local
+        agent_k_map[agent.id] = (k_local, k_long)
+
     for group in groups.values():
+        group_ids = set(a.id for a in group)
         for agent in group:
             others = [a for a in group if a.id != agent.id]
-            if max_local_neighbors is not None and len(others) > max_local_neighbors:
-                neighbors = random.sample(others, k=max_local_neighbors)
+            k_local, _ = agent_k_map[agent.id]
+            if len(others) > k_local:
+                neighbors = random.sample(others, k=k_local)
             else:
                 neighbors = others
             agent.neighbors = neighbors
             agent.n_neighbors = len(agent.neighbors)
 
-def add_long_links(agents, k=5, filter_fn=None):
+    return agent_k_map
+
+def add_long_links(agents, agent_k_map, filter_fn=None):
     id_map = {a.id: a for a in agents}
     ids = [a.id for a in agents]
 
@@ -39,9 +53,10 @@ def add_long_links(agents, k=5, filter_fn=None):
     prob_dist = degree_weights / degree_weights.sum()
 
     for agent in agents:
+        k_local, k_long = agent_k_map[agent.id]
         new_links = set()
         attempts = 0
-        while len(new_links) < k and attempts < 50:
+        while len(new_links) < k_long and attempts < 50:
             candidate_id = np.random.choice(ids, p=prob_dist)
             candidate = id_map[candidate_id]
             attempts += 1
@@ -60,17 +75,14 @@ def add_long_links(agents, k=5, filter_fn=None):
 
         agent.n_neighbors = len(agent.neighbors)
 
-
-
-def build_net(agents, level="buurt", k=5, filter_fn=None, max_local_neighbors=5, return_nx=False):
-    assign_local(agents, level=level, max_local_neighbors=max_local_neighbors)
-    add_long_links(agents, k=k, filter_fn=filter_fn)
-
+def build_net(agents, level="buurt", filter_fn=None, return_nx=False):
+    agent_k_map = assign_local(agents, level=level)
+    add_long_links(agents, agent_k_map, filter_fn=filter_fn)
 
     if return_nx:
         G = nx.Graph()
         G.add_nodes_from([a.id for a in agents])
-        
+
         added_edges = set()
         for agent in agents:
             for neighbor in agent.neighbors:
