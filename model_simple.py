@@ -31,7 +31,6 @@ class ABM:
         self.nx_graph = build_net(
             self.agents,
             level=self.net_level,
-            k=self.k_small_world,
             filter_fn=None,
             return_nx=True
         )
@@ -72,41 +71,52 @@ class ABM:
             )
             agents.append(agent)
         return agents
-
+    
     def _assign_targeting(self, agents):
         strategy = self.policy_dict.get("strategy_tag", "")
 
-        if strategy == "fast_adoption":
-            # choose 20% highest degree agents
-            agents_sorted = sorted(agents, key=lambda a: len(a.neighbors), reverse=True)
-            n_top = int(0.2 * len(agents))
-            for i, agent in enumerate(agents_sorted):
-                agent.is_targeted = (i < n_top)
-
-        elif strategy == "support_vulnerable":
-            # choose 20% lowest income + 20% highest elek agents
-            agents_sorted = sorted(agents, key=lambda a: (a.income, -a.elek))
-            n_target = int(0.2 * len(agents))
-            for i, agent in enumerate(agents_sorted):
-                agent.is_targeted = (i < n_target)
-
-        elif strategy == "universal_nudge":
-            # random
+        if strategy == "reduce_cost":
             for agent in agents:
-                agent.is_targeted = (np.random.rand() < 0.2)
-
-        elif strategy == "behavioral_first":
-            # choose 20% agents with highest beta0 (i.e., highest latent tendency to adopt)
-            agents_with_beta0 = [(agent, agent.compute_beta0()) for agent in agents]
-            agents_sorted = sorted(agents_with_beta0, key=lambda tup: tup[1], reverse=True)
-            n_top = int(0.2 * len(agents))
-            for i, (agent, _) in enumerate(agents_sorted):
-                agent.is_targeted = (i < n_top)
-
+                agent.is_targeted = True 
 
         elif strategy == "no_policy":
             for agent in agents:
                 agent.is_targeted = False
+
+    # def _assign_targeting(self, agents):
+    #     strategy = self.policy_dict.get("strategy_tag", "")
+
+    #     if strategy == "fast_adoption":
+    #         # choose 20% highest degree agents
+    #         agents_sorted = sorted(agents, key=lambda a: len(a.neighbors), reverse=True)
+    #         n_top = int(0.2 * len(agents))
+    #         for i, agent in enumerate(agents_sorted):
+    #             agent.is_targeted = (i < n_top)
+
+    #     elif strategy == "support_vulnerable":
+    #         # choose 20% lowest income + 20% highest elek agents
+    #         agents_sorted = sorted(agents, key=lambda a: (a.income, -a.elek))
+    #         n_target = int(0.2 * len(agents))
+    #         for i, agent in enumerate(agents_sorted):
+    #             agent.is_targeted = (i < n_target)
+
+    #     elif strategy == "universal_nudge":
+    #         # random
+    #         for agent in agents:
+    #             agent.is_targeted = (np.random.rand() < 0.2)
+
+    #     elif strategy == "behavioral_first":
+    #         # choose 20% agents with highest beta0 (i.e., highest latent tendency to adopt)
+    #         agents_with_beta0 = [(agent, agent.compute_beta0()) for agent in agents]
+    #         agents_sorted = sorted(agents_with_beta0, key=lambda tup: tup[1], reverse=True)
+    #         n_top = int(0.2 * len(agents))
+    #         for i, (agent, _) in enumerate(agents_sorted):
+    #             agent.is_targeted = (i < n_top)
+
+
+    #     elif strategy == "no_policy":
+    #         for agent in agents:
+    #             agent.is_targeted = False
 
     def step(self, t):
         for agent in self.agents:
