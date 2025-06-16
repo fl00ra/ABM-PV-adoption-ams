@@ -21,7 +21,7 @@ def group_by(agents, level="buurt"):
 def total_deg():
     return max(1, np.random.poisson(lam=6))
 
-def assign_local(agents, level="buurt", local_ratio=0.7):
+def assign_local(agents, level="buurt", local_ratio=0.85):
     groups = group_by(agents, level)
     agent_k_map = {}
     for agent in agents:

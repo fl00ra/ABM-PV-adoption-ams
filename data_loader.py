@@ -25,7 +25,6 @@ def load_placeholder_data(path="placeholder_cbs_dataset.csv", year=2022):
             "elek_usage": row["ELEK"],
             "elec_return": row["ELEKTERUG"],
             "elec_price": 0.4, # adjusted later
-            # "lambda_loss_aversion": 1.5, # adjusted later
             "household_type": row["household_type"],
             "lihe": row["LIHE"],
             "lekwi": row["LEKWI"],

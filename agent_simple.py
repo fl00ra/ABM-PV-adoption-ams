@@ -55,6 +55,10 @@ class HouseholdAgent:
 
         self.motivation_score = 0.0
         self.adoption_threshold = np.random.uniform(2.5, 4.0)
+        self.social_weight = self._sample_social_weight()
+
+        self.status = "active"  # or deliberate, exit
+        self.steps_without_adoption = 0
 
         self.adoption_track = []
         self.history = []  
@@ -67,12 +71,48 @@ class HouseholdAgent:
         # return raw_V
 
 
+    # def compute_Si(self):
+    #     """S_i = n_adopted / n_total"""
+    #     self.n_adopted_neighbors = sum(1 for neighbor in self.neighbors if neighbor.adopted)
+    #     if self.n_neighbors == 0:
+    #         return 0
+    #     return self.n_adopted_neighbors / self.n_neighbors
+
+    # def compute_Si(self):
+    #     adopted_weight = 0
+    #     total_weight = 0
+
+    #     for neighbor in self.neighbors:
+    #         w = self._spatial_weight(neighbor)
+    #         if neighbor.adopted:
+    #             adopted_weight += w
+    #         total_weight += w
+
+    #     return adopted_weight / total_weight if total_weight > 0 else 0
     def compute_Si(self):
-        """S_i = n_adopted / n_total"""
-        self.n_adopted_neighbors = sum(1 for neighbor in self.neighbors if neighbor.adopted)
-        if self.n_neighbors == 0:
-            return 0
-        return self.n_adopted_neighbors / self.n_neighbors
+        adopted_weight = 0
+        total_weight = 0
+
+        for neighbor in self.neighbors:
+            w = neighbor.social_weight
+            if neighbor.adopted:
+                adopted_weight += w
+            total_weight += w
+
+        return adopted_weight / total_weight if total_weight > 0 else 0
+
+
+    def _spatial_weight(self, neighbor):
+        if self.location_code == neighbor.location_code:
+            return 1.0  
+        elif self.gemeente_code == neighbor.gemeente_code and self.wijk_code == neighbor.wijk_code:
+            return 0.6  
+        elif self.gemeente_code == neighbor.gemeente_code:
+            return 0.3  
+        else:
+            return 0.1  
+        
+
     
     def compute_beta0(self):
         """
@@ -116,6 +156,9 @@ class HouseholdAgent:
         """
         self.apply_policy(timestep)
 
+        if self.status == "exit":
+            return  
+
         if self.adopted:
             return
 
@@ -138,6 +181,26 @@ class HouseholdAgent:
         if np.random.rand() < prob:
             self.adopted = True
             self.adoption_time = timestep
+
+        if not self.adopted:
+            self.steps_without_adoption += 1
+
+            if self.status == "active" and self.steps_without_adoption >= 5:
+                self.status = "deliberate"
+
+            elif self.status == "deliberate":
+                S = self.compute_Si()
+                if S > 0.4 and np.random.rand() < 0.7:
+                    self.status = "exit"
+        else:
+            self.steps_without_adoption = 0
+
+
+
+
+
+
+
 
     def apply_policy(self, timestep=None):
         if self.adopted or self.policy_applied:
@@ -256,3 +319,14 @@ class HouseholdAgent:
         if self.lihe or self.lekwi or self.lihezlek:
             base_Y -= 1.5
         return np.clip(base_Y + np.random.normal(0, 1), 3, 10)
+
+    def _sample_social_weight(self):
+
+        dist_params = {
+            "with_kids": (1.2, 0.1),
+            "couple_no_kids": (1.0, 0.1),
+            "single": (0.8, 0.1),
+            "nonfamily_group": (0.6, 0.1)
+        }
+        mu, sigma = dist_params.get(self.household_type, (1.0, 0.1))
+        return np.clip(np.random.normal(mu, sigma), 0.3, 2.0)
