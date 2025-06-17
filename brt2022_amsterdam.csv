@@ -1,0 +1,482 @@
+buurtcode2022,buurtnaam2022,GM_2022,GM2022,GM_NAAM,WK_2022,WK2022,WK_NAAM
+3630000,Kop Zeedijk,GM0363,363,Amsterdam,WK036300,36300,Burgwallen-Oude Zijde
+3630001,Oude Kerk e.o.,GM0363,363,Amsterdam,WK036300,36300,Burgwallen-Oude Zijde
+3630002,Burgwallen Oost,GM0363,363,Amsterdam,WK036300,36300,Burgwallen-Oude Zijde
+3630003,Nes e.o.,GM0363,363,Amsterdam,WK036300,36300,Burgwallen-Oude Zijde
+3630004,BG-terrein e.o.,GM0363,363,Amsterdam,WK036300,36300,Burgwallen-Oude Zijde
+3630100,Stationsplein e.o.,GM0363,363,Amsterdam,WK036301,36301,Burgwallen-Nieuwe Zijde
+3630101,Hemelrijk,GM0363,363,Amsterdam,WK036301,36301,Burgwallen-Nieuwe Zijde
+3630102,Nieuwendijk Noord,GM0363,363,Amsterdam,WK036301,36301,Burgwallen-Nieuwe Zijde
+3630103,Spuistraat Noord,GM0363,363,Amsterdam,WK036301,36301,Burgwallen-Nieuwe Zijde
+3630104,Nieuwe Kerk e.o.,GM0363,363,Amsterdam,WK036301,36301,Burgwallen-Nieuwe Zijde
+3630105,Spuistraat Zuid,GM0363,363,Amsterdam,WK036301,36301,Burgwallen-Nieuwe Zijde
+3630106,Begijnhofbuurt,GM0363,363,Amsterdam,WK036301,36301,Burgwallen-Nieuwe Zijde
+3630107,Kalverdriehoek,GM0363,363,Amsterdam,WK036301,36301,Burgwallen-Nieuwe Zijde
+3630200,Langestraat e.o.,GM0363,363,Amsterdam,WK036302,36302,Grachtengordel-West
+3630201,Leliegracht e.o.,GM0363,363,Amsterdam,WK036302,36302,Grachtengordel-West
+3630202,Felix Meritisbuurt,GM0363,363,Amsterdam,WK036302,36302,Grachtengordel-West
+3630203,Leidsegracht Noord,GM0363,363,Amsterdam,WK036302,36302,Grachtengordel-West
+3630300,Spiegelbuurt,GM0363,363,Amsterdam,WK036303,36303,Grachtengordel-Zuid
+3630301,Gouden Bocht,GM0363,363,Amsterdam,WK036303,36303,Grachtengordel-Zuid
+3630302,Van Loonbuurt,GM0363,363,Amsterdam,WK036303,36303,Grachtengordel-Zuid
+3630303,Amstelveldbuurt,GM0363,363,Amsterdam,WK036303,36303,Grachtengordel-Zuid
+3630304,Rembrandtpleinbuurt,GM0363,363,Amsterdam,WK036303,36303,Grachtengordel-Zuid
+3630305,Reguliersbuurt,GM0363,363,Amsterdam,WK036303,36303,Grachtengordel-Zuid
+3630306,Leidsegracht Zuid,GM0363,363,Amsterdam,WK036303,36303,Grachtengordel-Zuid
+3630400,Oosterdokseiland,GM0363,363,Amsterdam,WK036304,36304,Nieuwmarkt/Lastage
+3630401,Scheepvaarthuisbuurt,GM0363,363,Amsterdam,WK036304,36304,Nieuwmarkt/Lastage
+3630402,Rapenburg,GM0363,363,Amsterdam,WK036304,36304,Nieuwmarkt/Lastage
+3630403,Lastage,GM0363,363,Amsterdam,WK036304,36304,Nieuwmarkt/Lastage
+3630404,Nieuwmarkt,GM0363,363,Amsterdam,WK036304,36304,Nieuwmarkt/Lastage
+3630405,Uilenburg,GM0363,363,Amsterdam,WK036304,36304,Nieuwmarkt/Lastage
+3630406,Valkenburg,GM0363,363,Amsterdam,WK036304,36304,Nieuwmarkt/Lastage
+3630407,Zuiderkerkbuurt,GM0363,363,Amsterdam,WK036304,36304,Nieuwmarkt/Lastage
+3630408,Waterloopleinbuurt,GM0363,363,Amsterdam,WK036304,36304,Nieuwmarkt/Lastage
+3630500,Westerdokseiland,GM0363,363,Amsterdam,WK036305,36305,Haarlemmerbuurt
+3630501,Haarlemmerbuurt Oost,GM0363,363,Amsterdam,WK036305,36305,Haarlemmerbuurt
+3630502,Haarlemmerbuurt West,GM0363,363,Amsterdam,WK036305,36305,Haarlemmerbuurt
+3630503,Westelijke eilanden,GM0363,363,Amsterdam,WK036305,36305,Haarlemmerbuurt
+3630505,Planciusbuurt Noord,GM0363,363,Amsterdam,WK036305,36305,Haarlemmerbuurt
+3630506,Planciusbuurt Zuid,GM0363,363,Amsterdam,WK036305,36305,Haarlemmerbuurt
+3630600,Driehoekbuurt,GM0363,363,Amsterdam,WK036306,36306,Jordaan
+3630602,Bloemgrachtbuurt,GM0363,363,Amsterdam,WK036306,36306,Jordaan
+3630603,Marnixbuurt Noord,GM0363,363,Amsterdam,WK036306,36306,Jordaan
+3630604,Zaagpoortbuurt,GM0363,363,Amsterdam,WK036306,36306,Jordaan
+3630605,Marnixbuurt Midden,GM0363,363,Amsterdam,WK036306,36306,Jordaan
+3630606,Elandsgrachtbuurt,GM0363,363,Amsterdam,WK036306,36306,Jordaan
+3630607,Passeerdersgrachtbuurt,GM0363,363,Amsterdam,WK036306,36306,Jordaan
+3630608,Groenmarktkadebuurt,GM0363,363,Amsterdam,WK036306,36306,Jordaan
+3630609,Marnixbuurt Zuid,GM0363,363,Amsterdam,WK036306,36306,Jordaan
+3630610,Anjeliersbuurt Noord,GM0363,363,Amsterdam,WK036306,36306,Jordaan
+3630611,Anjeliersbuurt Zuid,GM0363,363,Amsterdam,WK036306,36306,Jordaan
+3630700,Leidsebuurt Noordwest,GM0363,363,Amsterdam,WK036307,36307,De Weteringschans
+3630701,Leidsebuurt Zuidwest,GM0363,363,Amsterdam,WK036307,36307,De Weteringschans
+3630702,Leidsebuurt Noordoost,GM0363,363,Amsterdam,WK036307,36307,De Weteringschans
+3630703,Leidsebuurt Zuidoost,GM0363,363,Amsterdam,WK036307,36307,De Weteringschans
+3630704,Weteringbuurt,GM0363,363,Amsterdam,WK036307,36307,De Weteringschans
+3630705,Den Texbuurt,GM0363,363,Amsterdam,WK036307,36307,De Weteringschans
+3630706,Utrechtsebuurt Zuid,GM0363,363,Amsterdam,WK036307,36307,De Weteringschans
+3630707,Frederikspleinbuurt,GM0363,363,Amsterdam,WK036307,36307,De Weteringschans
+3630800,Weesperbuurt,GM0363,363,Amsterdam,WK036308,36308,Weesperbuurt/Plantage
+3630801,Sarphatistrook,GM0363,363,Amsterdam,WK036308,36308,Weesperbuurt/Plantage
+3630803,de Plantage,GM0363,363,Amsterdam,WK036308,36308,Weesperbuurt/Plantage
+3630804,Alexanderplein e.o.,GM0363,363,Amsterdam,WK036308,36308,Weesperbuurt/Plantage
+3630900,Marine-Etablissement,GM0363,363,Amsterdam,WK036309,36309,Oostelijke Eilanden/Kadijken
+3630901,Kattenburg,GM0363,363,Amsterdam,WK036309,36309,Oostelijke Eilanden/Kadijken
+3630902,Wittenburg,GM0363,363,Amsterdam,WK036309,36309,Oostelijke Eilanden/Kadijken
+3630903,Oostenburg,GM0363,363,Amsterdam,WK036309,36309,Oostelijke Eilanden/Kadijken
+3630904,Czaar Peterbuurt,GM0363,363,Amsterdam,WK036309,36309,Oostelijke Eilanden/Kadijken
+3630905,Het Funen,GM0363,363,Amsterdam,WK036309,36309,Oostelijke Eilanden/Kadijken
+3630907,Kazernebuurt,GM0363,363,Amsterdam,WK036309,36309,Oostelijke Eilanden/Kadijken
+3630908,Kadijken,GM0363,363,Amsterdam,WK036309,36309,Oostelijke Eilanden/Kadijken
+3631000,Coenhaven/Mercuriushaven,GM0363,363,Amsterdam,WK036310,36310,Westelijk Havengebied
+3631001,Alfa-driehoek,GM0363,363,Amsterdam,WK036310,36310,Westelijk Havengebied
+3631002,Petroleumhaven,GM0363,363,Amsterdam,WK036310,36310,Westelijk Havengebied
+3631003,Westhaven Noord,GM0363,363,Amsterdam,WK036310,36310,Westelijk Havengebied
+3631004,Vervoerscentrum,GM0363,363,Amsterdam,WK036310,36310,Westelijk Havengebied
+3631005,Amerikahaven,GM0363,363,Amsterdam,WK036310,36310,Westelijk Havengebied
+3631006,Afrikahaven,GM0363,363,Amsterdam,WK036310,36310,Westelijk Havengebied
+3631007,Westhaven Zuid,GM0363,363,Amsterdam,WK036310,36310,Westelijk Havengebied
+3631100,Sloterdijk II,GM0363,363,Amsterdam,WK036311,36311,Bedrijventerrein Sloterdijk
+3631102,Sloterdijk III Oost,GM0363,363,Amsterdam,WK036311,36311,Bedrijventerrein Sloterdijk
+3631103,Sloterdijk III West,GM0363,363,Amsterdam,WK036311,36311,Bedrijventerrein Sloterdijk
+3631104,De Heining,GM0363,363,Amsterdam,WK036311,36311,Bedrijventerrein Sloterdijk
+3631105,Teleport,GM0363,363,Amsterdam,WK036311,36311,Bedrijventerrein Sloterdijk
+3631107,Bretten Oost,GM0363,363,Amsterdam,WK036311,36311,Bedrijventerrein Sloterdijk
+3631109,Bretten West,GM0363,363,Amsterdam,WK036311,36311,Bedrijventerrein Sloterdijk
+3631200,Houthavens West,GM0363,363,Amsterdam,WK036312,36312,Houthavens
+3631201,Houthavens Oost,GM0363,363,Amsterdam,WK036312,36312,Houthavens
+3631300,Zeeheldenbuurt,GM0363,363,Amsterdam,WK036313,36313,Spaarndammer- en Zeeheldenbuurt
+3631301,Spaarndammerbuurt Noordoost,GM0363,363,Amsterdam,WK036313,36313,Spaarndammer- en Zeeheldenbuurt
+3631302,Spaarndammerbuurt Zuidoost,GM0363,363,Amsterdam,WK036313,36313,Spaarndammer- en Zeeheldenbuurt
+3631303,Spaarndammerbuurt Zuidwest,GM0363,363,Amsterdam,WK036313,36313,Spaarndammer- en Zeeheldenbuurt
+3631304,Spaarndammerbuurt Midden,GM0363,363,Amsterdam,WK036313,36313,Spaarndammer- en Zeeheldenbuurt
+3631305,Spaarndammerbuurt Noordwest,GM0363,363,Amsterdam,WK036313,36313,Spaarndammer- en Zeeheldenbuurt
+3631306,Westergasfabriek,GM0363,363,Amsterdam,WK036313,36313,Spaarndammer- en Zeeheldenbuurt
+3631307,Overbraker Binnenpolder,GM0363,363,Amsterdam,WK036313,36313,Spaarndammer- en Zeeheldenbuurt
+3631400,De Wittenbuurt Noord,GM0363,363,Amsterdam,WK036314,36314,Staatsliedenbuurt
+3631401,De Wittenbuurt Zuid,GM0363,363,Amsterdam,WK036314,36314,Staatsliedenbuurt
+3631402,Staatsliedenbuurt Noordoost,GM0363,363,Amsterdam,WK036314,36314,Staatsliedenbuurt
+3631403,Fannius Scholtenbuurt,GM0363,363,Amsterdam,WK036314,36314,Staatsliedenbuurt
+3631404,Westerstaatsman,GM0363,363,Amsterdam,WK036314,36314,Staatsliedenbuurt
+3631405,Buyskade e.o.,GM0363,363,Amsterdam,WK036314,36314,Staatsliedenbuurt
+3631500,Ecowijk,GM0363,363,Amsterdam,WK036315,36315,Centrale Markt
+3631501,Markthallen,GM0363,363,Amsterdam,WK036315,36315,Centrale Markt
+3631502,Bedrijvencentrum Westerkwartier,GM0363,363,Amsterdam,WK036315,36315,Centrale Markt
+3631503,Marcanti,GM0363,363,Amsterdam,WK036315,36315,Centrale Markt
+3631600,Frederik Hendrikbuurt Noord,GM0363,363,Amsterdam,WK036316,36316,Frederik Hendrikbuurt
+3631601,Frederik Hendrikbuurt Zuidoost,GM0363,363,Amsterdam,WK036316,36316,Frederik Hendrikbuurt
+3631602,Frederik Hendrikbuurt Zuidwest,GM0363,363,Amsterdam,WK036316,36316,Frederik Hendrikbuurt
+3631700,Da Costabuurt Noord,GM0363,363,Amsterdam,WK036317,36317,Da Costabuurt
+3631800,Bellamybuurt Noord,GM0363,363,Amsterdam,WK036318,36318,Kinkerbuurt
+3631801,Bellamybuurt Zuid,GM0363,363,Amsterdam,WK036318,36318,Kinkerbuurt
+3631900,Da Costabuurt Zuid,GM0363,363,Amsterdam,WK036319,36319,Van Lennepbuurt
+3631901,Borgerbuurt,GM0363,363,Amsterdam,WK036319,36319,Van Lennepbuurt
+3631902,Lootsbuurt,GM0363,363,Amsterdam,WK036319,36319,Van Lennepbuurt
+3632000,Helmersbuurt Oost,GM0363,363,Amsterdam,WK036320,36320,Helmersbuurt
+3632001,WG-terrein,GM0363,363,Amsterdam,WK036320,36320,Helmersbuurt
+3632002,Cremerbuurt Oost,GM0363,363,Amsterdam,WK036320,36320,Helmersbuurt
+3632100,Cremerbuurt West,GM0363,363,Amsterdam,WK036321,36321,Overtoomse Sluis
+3632101,Vondelparkbuurt West,GM0363,363,Amsterdam,WK036321,36321,Overtoomse Sluis
+3632200,Vondelparkbuurt Oost,GM0363,363,Amsterdam,WK036322,36322,Vondelbuurt
+3632201,Vondelparkbuurt Midden,GM0363,363,Amsterdam,WK036322,36322,Vondelbuurt
+3632300,Zuidas Noord,GM0363,363,Amsterdam,WK036323,36323,Zuidas
+3632301,RAI,GM0363,363,Amsterdam,WK036323,36323,Zuidas
+3632302,VU-kwartier,GM0363,363,Amsterdam,WK036323,36323,Zuidas
+3632303,Zuidas Zuid,GM0363,363,Amsterdam,WK036323,36323,Zuidas
+3632304,Vivaldi,GM0363,363,Amsterdam,WK036323,36323,Zuidas
+3632400,Hemonybuurt,GM0363,363,Amsterdam,WK036324,36324,Oude Pijp
+3632401,Gerard Doubuurt,GM0363,363,Amsterdam,WK036324,36324,Oude Pijp
+3632402,Frans Halsbuurt,GM0363,363,Amsterdam,WK036324,36324,Oude Pijp
+3632403,Hercules Seghersbuurt,GM0363,363,Amsterdam,WK036324,36324,Oude Pijp
+3632404,Sarphatiparkbuurt,GM0363,363,Amsterdam,WK036324,36324,Oude Pijp
+3632500,Willibrordusbuurt,GM0363,363,Amsterdam,WK036325,36325,Nieuwe Pijp
+3632501,Van der Helstpleinbuurt,GM0363,363,Amsterdam,WK036325,36325,Nieuwe Pijp
+3632502,Lizzy Ansinghbuurt,GM0363,363,Amsterdam,WK036325,36325,Nieuwe Pijp
+3632503,Cornelis Troostbuurt,GM0363,363,Amsterdam,WK036325,36325,Nieuwe Pijp
+3632600,Diamantbuurt,GM0363,363,Amsterdam,WK036326,36326,Zuid Pijp
+3632601,Burgemeester Tellegenbuurt Oost,GM0363,363,Amsterdam,WK036326,36326,Zuid Pijp
+3632602,Burgemeester Tellegenbuurt West,GM0363,363,Amsterdam,WK036326,36326,Zuid Pijp
+3632700,Swammerdambuurt,GM0363,363,Amsterdam,WK036327,36327,Weesperzijde
+3632701,Weesperzijde Midden/Zuid,GM0363,363,Amsterdam,WK036327,36327,Weesperzijde
+3632702,Parooldriehoek,GM0363,363,Amsterdam,WK036327,36327,Weesperzijde
+3632800,Oosterparkbuurt Noordwest,GM0363,363,Amsterdam,WK036328,36328,Oosterparkbuurt
+3632801,Oosterpark,GM0363,363,Amsterdam,WK036328,36328,Oosterparkbuurt
+3632802,Oosterparkbuurt Zuidoost,GM0363,363,Amsterdam,WK036328,36328,Oosterparkbuurt
+3632803,Oosterparkbuurt Zuidwest,GM0363,363,Amsterdam,WK036328,36328,Oosterparkbuurt
+3632900,Dapperbuurt Noord,GM0363,363,Amsterdam,WK036329,36329,Dapperbuurt
+3632901,Dapperbuurt Zuid,GM0363,363,Amsterdam,WK036329,36329,Dapperbuurt
+3632902,Oostpoort,GM0363,363,Amsterdam,WK036329,36329,Dapperbuurt
+3633000,Transvaalbuurt West,GM0363,363,Amsterdam,WK036330,36330,Transvaalbuurt
+3633001,Transvaalbuurt Oost,GM0363,363,Amsterdam,WK036330,36330,Transvaalbuurt
+3633100,Noordwestkwadrant Indische buurt Noord,GM0363,363,Amsterdam,WK036331,36331,Indische Buurt West
+3633101,Noordwestkwadrant Indische buurt Zuid,GM0363,363,Amsterdam,WK036331,36331,Indische Buurt West
+3633102,Zuidwestkwadrant Indische buurt,GM0363,363,Amsterdam,WK036331,36331,Indische Buurt West
+3633200,Noordoostkwadrant Indische buurt,GM0363,363,Amsterdam,WK036332,36332,Indische Buurt Oost
+3633201,Zuidoostkwadrant Indische buurt,GM0363,363,Amsterdam,WK036332,36332,Indische Buurt Oost
+3633202,Zeeburgerdijk Oost,GM0363,363,Amsterdam,WK036332,36332,Indische Buurt Oost
+3633203,Flevopark,GM0363,363,Amsterdam,WK036332,36332,Indische Buurt Oost
+3633300,Oostelijke Handelskade,GM0363,363,Amsterdam,WK036333,36333,Oostelijk Havengebied
+3633301,Rietlanden,GM0363,363,Amsterdam,WK036333,36333,Oostelijk Havengebied
+3633302,Java-eiland,GM0363,363,Amsterdam,WK036333,36333,Oostelijk Havengebied
+3633303,KNSM-eiland,GM0363,363,Amsterdam,WK036333,36333,Oostelijk Havengebied
+3633304,Sporenburg,GM0363,363,Amsterdam,WK036333,36333,Oostelijk Havengebied
+3633305,Borneo,GM0363,363,Amsterdam,WK036333,36333,Oostelijk Havengebied
+3633306,Entrepot-Noordwest,GM0363,363,Amsterdam,WK036333,36333,Oostelijk Havengebied
+3633307,Architectenbuurt,GM0363,363,Amsterdam,WK036333,36333,Oostelijk Havengebied
+3633308,Bedrijvengebied Veelaan,GM0363,363,Amsterdam,WK036333,36333,Oostelijk Havengebied
+3633309,Bedrijvengebied Cruquiusweg,GM0363,363,Amsterdam,WK036333,36333,Oostelijk Havengebied
+3633310,Bedrijvengebied Zeeburgerkade,GM0363,363,Amsterdam,WK036333,36333,Oostelijk Havengebied
+3633400,Zeeburgereiland Noordwest,GM0363,363,Amsterdam,WK036334,36334,Zeeburgereiland/Nieuwe Diep
+3633402,Zeeburgereiland Zuidoost,GM0363,363,Amsterdam,WK036334,36334,Zeeburgereiland/Nieuwe Diep
+3633403,Zeeburgereiland Zuidwest,GM0363,363,Amsterdam,WK036334,36334,Zeeburgereiland/Nieuwe Diep
+3633404,Nieuwe Diep/Diemerpark,GM0363,363,Amsterdam,WK036334,36334,Zeeburgereiland/Nieuwe Diep
+3633405,RI Oost terrein,GM0363,363,Amsterdam,WK036334,36334,Zeeburgereiland/Nieuwe Diep
+3633406,Zeeburgereiland Noordoost,GM0363,363,Amsterdam,WK036334,36334,Zeeburgereiland/Nieuwe Diep
+3633500,Steigereiland Noord,GM0363,363,Amsterdam,WK036335,36335,IJburg West
+3633501,Steigereiland Zuid,GM0363,363,Amsterdam,WK036335,36335,IJburg West
+3633502,Haveneiland Zuidwest/Rieteiland West,GM0363,363,Amsterdam,WK036335,36335,IJburg West
+3633504,Haveneiland Noordwest,GM0363,363,Amsterdam,WK036335,36335,IJburg West
+3633505,Haveneiland Noordoost,GM0363,363,Amsterdam,WK036335,36335,IJburg West
+3633600,Woon- en Groengebied Sloterdijk,GM0363,363,Amsterdam,WK036336,36336,Sloterdijk
+3633601,Bedrijventerrein Sloterdijk I,GM0363,363,Amsterdam,WK036336,36336,Sloterdijk
+3633700,Bedrijventerrein Landlust,GM0363,363,Amsterdam,WK036337,36337,Landlust
+3633702,Bosleeuw,GM0363,363,Amsterdam,WK036337,36337,Landlust
+3633703,Landlust Zuid,GM0363,363,Amsterdam,WK036337,36337,Landlust
+3633704,Erasmusparkbuurt Oost,GM0363,363,Amsterdam,WK036337,36337,Landlust
+3633705,Gibraltarbuurt,GM0363,363,Amsterdam,WK036337,36337,Landlust
+3633706,Landlust Noord,GM0363,363,Amsterdam,WK036337,36337,Landlust
+3633802,Erasmusparkbuurt West,GM0363,363,Amsterdam,WK036338,36338,Erasmuspark
+3633803,Robert Scottbuurt Oost,GM0363,363,Amsterdam,WK036338,36338,Erasmuspark
+3633900,Robert Scottbuurt West,GM0363,363,Amsterdam,WK036339,36339,De Kolenkit
+3633901,Laan van Spartaan,GM0363,363,Amsterdam,WK036339,36339,De Kolenkit
+3633902,Kolenkitbuurt Zuid,GM0363,363,Amsterdam,WK036339,36339,De Kolenkit
+3633903,Kolenkitbuurt Noord,GM0363,363,Amsterdam,WK036339,36339,De Kolenkit
+3634000,Geuzenhofbuurt,GM0363,363,Amsterdam,WK036340,36340,Geuzenbuurt
+3634001,Trompbuurt,GM0363,363,Amsterdam,WK036340,36340,Geuzenbuurt
+3634002,Pieter van der Doesbuurt,GM0363,363,Amsterdam,WK036340,36340,Geuzenbuurt
+3634100,John Franklinbuurt,GM0363,363,Amsterdam,WK036341,36341,Van Galenbuurt
+3634101,Jan Maijenbuurt,GM0363,363,Amsterdam,WK036341,36341,Van Galenbuurt
+3634102,Orteliusbuurt Noord,GM0363,363,Amsterdam,WK036341,36341,Van Galenbuurt
+3634103,Mercatorpark,GM0363,363,Amsterdam,WK036341,36341,Van Galenbuurt
+3634200,Balboaplein e.o.,GM0363,363,Amsterdam,WK036342,36342,Hoofdweg e.o.
+3634201,Columbusplein e.o.,GM0363,363,Amsterdam,WK036342,36342,Hoofdweg e.o.
+3634202,Orteliusbuurt Midden,GM0363,363,Amsterdam,WK036342,36342,Hoofdweg e.o.
+3634203,Orteliusbuurt Zuid,GM0363,363,Amsterdam,WK036342,36342,Hoofdweg e.o.
+3634300,Paramariboplein e.o.,GM0363,363,Amsterdam,WK036343,36343,Westindische Buurt
+3634301,Postjeskade e.o.,GM0363,363,Amsterdam,WK036343,36343,Westindische Buurt
+3634400,Surinamepleinbuurt,GM0363,363,Amsterdam,WK036344,36344,Hoofddorppleinbuurt
+3634401,Westlandgrachtbuurt,GM0363,363,Amsterdam,WK036344,36344,Hoofddorppleinbuurt
+3634402,Aalsmeerwegbuurt West,GM0363,363,Amsterdam,WK036344,36344,Hoofddorppleinbuurt
+3634403,Aalsmeerwegbuurt Oost,GM0363,363,Amsterdam,WK036344,36344,Hoofddorppleinbuurt
+3634404,Legmeerpleinbuurt,GM0363,363,Amsterdam,WK036344,36344,Hoofddorppleinbuurt
+3634405,Bedrijventerrein Schinkel,GM0363,363,Amsterdam,WK036344,36344,Hoofddorppleinbuurt
+3634500,Schinkelbuurt Noord,GM0363,363,Amsterdam,WK036345,36345,Schinkelbuurt
+3634501,Schinkelbuurt Zuid,GM0363,363,Amsterdam,WK036345,36345,Schinkelbuurt
+3634600,Valeriusbuurt Oost,GM0363,363,Amsterdam,WK036346,36346,Willemspark
+3634601,Valeriusbuurt West,GM0363,363,Amsterdam,WK036346,36346,Willemspark
+3634602,Willemsparkbuurt Noord,GM0363,363,Amsterdam,WK036346,36346,Willemspark
+3634603,Vondelpark West,GM0363,363,Amsterdam,WK036346,36346,Willemspark
+3634700,Johannnes Vermeerbuurt,GM0363,363,Amsterdam,WK036347,36347,Museumkwartier
+3634701,P.C. Hooftbuurt,GM0363,363,Amsterdam,WK036347,36347,Museumkwartier
+3634702,Concertgebouwbuurt,GM0363,363,Amsterdam,WK036347,36347,Museumkwartier
+3634703,Cornelis Schuytbuurt,GM0363,363,Amsterdam,WK036347,36347,Museumkwartier
+3634704,Banpleinbuurt,GM0363,363,Amsterdam,WK036347,36347,Museumkwartier
+3634705,Hondecoeterbuurt,GM0363,363,Amsterdam,WK036347,36347,Museumkwartier
+3634706,Harmoniehofbuurt,GM0363,363,Amsterdam,WK036347,36347,Museumkwartier
+3634707,Museumplein,GM0363,363,Amsterdam,WK036347,36347,Museumkwartier
+3634708,Vondelpark Oost,GM0363,363,Amsterdam,WK036347,36347,Museumkwartier
+3634709,Duivelseiland,GM0363,363,Amsterdam,WK036347,36347,Museumkwartier
+3634800,Bertelmanpleinbuurt,GM0363,363,Amsterdam,WK036348,36348,Stadionbuurt
+3634801,Marathonbuurt Oost,GM0363,363,Amsterdam,WK036348,36348,Stadionbuurt
+3634802,Marathonbuurt West,GM0363,363,Amsterdam,WK036348,36348,Stadionbuurt
+3634803,Olympisch Stadion e.o.,GM0363,363,Amsterdam,WK036348,36348,Stadionbuurt
+3634804,IJsbaanpad e.o.,GM0363,363,Amsterdam,WK036348,36348,Stadionbuurt
+3634805,Van Tuyllbuurt,GM0363,363,Amsterdam,WK036348,36348,Stadionbuurt
+3634900,Diepenbrockbuurt,GM0363,363,Amsterdam,WK036349,36349,Apollobuurt
+3634901,Beethovenbuurt,GM0363,363,Amsterdam,WK036349,36349,Apollobuurt
+3634902,Hiltonbuurt,GM0363,363,Amsterdam,WK036349,36349,Apollobuurt
+3634903,Minervabuurt Noord,GM0363,363,Amsterdam,WK036349,36349,Apollobuurt
+3634904,Minervabuurt Midden,GM0363,363,Amsterdam,WK036349,36349,Apollobuurt
+3634905,Minervabuurt Zuid,GM0363,363,Amsterdam,WK036349,36349,Apollobuurt
+3635000,Strandeiland,GM0363,363,Amsterdam,WK036350,36350,IJburg Oost
+3635001,Middeneiland Zuidoost,GM0363,363,Amsterdam,WK036350,36350,IJburg Oost
+3635003,Middeneiland Zuidwest,GM0363,363,Amsterdam,WK036350,36350,IJburg Oost
+3635005,Buiteneiland,GM0363,363,Amsterdam,WK036350,36350,IJburg Oost
+3635006,Centrumeiland,GM0363,363,Amsterdam,WK036350,36350,IJburg Oost
+3635100,Rieteiland Oost,GM0363,363,Amsterdam,WK036351,36351,IJburg Zuid
+3635101,Haveneiland Oost,GM0363,363,Amsterdam,WK036351,36351,IJburg Zuid
+3635102,Haveneiland Noord,GM0363,363,Amsterdam,WK036351,36351,IJburg Zuid
+3635200,Wielingenbuurt,GM0363,363,Amsterdam,WK036352,36352,Scheldebuurt
+3635201,Scheldebuurt West,GM0363,363,Amsterdam,WK036352,36352,Scheldebuurt
+3635202,Scheldebuurt Midden,GM0363,363,Amsterdam,WK036352,36352,Scheldebuurt
+3635203,Scheldebuurt Oost,GM0363,363,Amsterdam,WK036352,36352,Scheldebuurt
+3635206,Veluwebuurt,GM0363,363,Amsterdam,WK036352,36352,Scheldebuurt
+3635207,Kop Zuidas,GM0363,363,Amsterdam,WK036352,36352,Scheldebuurt
+3635300,IJselbuurt West,GM0363,363,Amsterdam,WK036353,36353,IJselbuurt
+3635301,IJselbuurt Oost,GM0363,363,Amsterdam,WK036353,36353,IJselbuurt
+3635400,Kromme Mijdrechtbuurt,GM0363,363,Amsterdam,WK036354,36354,Rijnbuurt
+3635401,Rijnbuurt Oost,GM0363,363,Amsterdam,WK036354,36354,Rijnbuurt
+3635402,Rijnbuurt Midden,GM0363,363,Amsterdam,WK036354,36354,Rijnbuurt
+3635403,Rijnbuurt West,GM0363,363,Amsterdam,WK036354,36354,Rijnbuurt
+3635404,Zorgvlied,GM0363,363,Amsterdam,WK036354,36354,Rijnbuurt
+3635501,De Eenhoorn,GM0363,363,Amsterdam,WK036355,36355,Frankendael
+3635502,Julianapark,GM0363,363,Amsterdam,WK036355,36355,Frankendael
+3635503,Don Bosco,GM0363,363,Amsterdam,WK036355,36355,Frankendael
+3635504,Frankendael,GM0363,363,Amsterdam,WK036355,36355,Frankendael
+3635505,Tuindorp Amstelstation,GM0363,363,Amsterdam,WK036355,36355,Frankendael
+3635506,De Wetbuurt,GM0363,363,Amsterdam,WK036355,36355,Frankendael
+3635507,Tuindorp Frankendael,GM0363,363,Amsterdam,WK036355,36355,Frankendael
+3635508,Van der Kunbuurt,GM0363,363,Amsterdam,WK036355,36355,Frankendael
+3635600,Linnaeusparkbuurt,GM0363,363,Amsterdam,WK036356,36356,Middenmeer
+3635601,Middenmeer Noord,GM0363,363,Amsterdam,WK036356,36356,Middenmeer
+3635602,Middenmeer Zuid,GM0363,363,Amsterdam,WK036356,36356,Middenmeer
+3635603,Sportpark Middenmeer Zuid,GM0363,363,Amsterdam,WK036356,36356,Middenmeer
+3635604,Sportpark Middenmeer Noord,GM0363,363,Amsterdam,WK036356,36356,Middenmeer
+3635605,Park de Meer,GM0363,363,Amsterdam,WK036356,36356,Middenmeer
+3635606,Sportpark Voorland,GM0363,363,Amsterdam,WK036356,36356,Middenmeer
+3635607,Science Park Noord,GM0363,363,Amsterdam,WK036356,36356,Middenmeer
+3635608,Science Park Zuid,GM0363,363,Amsterdam,WK036356,36356,Middenmeer
+3635700,Betondorp,GM0363,363,Amsterdam,WK036357,36357,Betondorp
+3635701,Nieuwe Oosterbegraafplaats,GM0363,363,Amsterdam,WK036357,36357,Betondorp
+3635702,Drieburg,GM0363,363,Amsterdam,WK036357,36357,Betondorp
+3635801,Weespertrekvaart,GM0363,363,Amsterdam,WK036358,36358,Omval/Overamstel
+3635804,Amstelglorie,GM0363,363,Amsterdam,WK036358,36358,Omval/Overamstel
+3635805,Overamstel,GM0363,363,Amsterdam,WK036358,36358,Omval/Overamstel
+3635806,Amstelkwartier Noord,GM0363,363,Amsterdam,WK036358,36358,Omval/Overamstel
+3635807,De Omval,GM0363,363,Amsterdam,WK036358,36358,Omval/Overamstel
+3635808,Amstelkwartier Zuid,GM0363,363,Amsterdam,WK036358,36358,Omval/Overamstel
+3635809,Amstelkwartier West,GM0363,363,Amsterdam,WK036358,36358,Omval/Overamstel
+3635900,Prinses Irenebuurt,GM0363,363,Amsterdam,WK036359,36359,Prinses Irenebuurt e.o.
+3635901,Beatrixpark,GM0363,363,Amsterdam,WK036359,36359,Prinses Irenebuurt e.o.
+3636000,Van der Pekbuurt,GM0363,363,Amsterdam,WK036360,36360,Volewijck
+3636001,Bloemenbuurt Zuid,GM0363,363,Amsterdam,WK036360,36360,Volewijck
+3636002,Bloemenbuurt Noord,GM0363,363,Amsterdam,WK036360,36360,Volewijck
+3636100,IJplein e.o.,GM0363,363,Amsterdam,WK036361,36361,IJplein/Vogelbuurt
+3636101,Vogelbuurt Zuid,GM0363,363,Amsterdam,WK036361,36361,IJplein/Vogelbuurt
+3636102,Vogelbuurt Noord,GM0363,363,Amsterdam,WK036361,36361,IJplein/Vogelbuurt
+3636103,Vliegenbos,GM0363,363,Amsterdam,WK036361,36361,IJplein/Vogelbuurt
+3636200,Tuindorp Nieuwendam West,GM0363,363,Amsterdam,WK036362,36362,Tuindorp Nieuwendam
+3636201,Tuindorp Nieuwendam Oost,GM0363,363,Amsterdam,WK036362,36362,Tuindorp Nieuwendam
+3636300,Blauwe Zand,GM0363,363,Amsterdam,WK036363,36363,Tuindorp Buiksloot
+3636400,Buiksloterdijk West,GM0363,363,Amsterdam,WK036364,36364,Nieuwendammerdijk/Buiksloterdijk
+3636401,Buiksloterdijk Oost,GM0363,363,Amsterdam,WK036364,36364,Nieuwendammerdijk/Buiksloterdijk
+3636402,Nieuwendammerdijk West,GM0363,363,Amsterdam,WK036364,36364,Nieuwendammerdijk/Buiksloterdijk
+3636403,Nieuwendammerdijk Oost,GM0363,363,Amsterdam,WK036364,36364,Nieuwendammerdijk/Buiksloterdijk
+3636404,Nieuwendammerdijk Zuid,GM0363,363,Amsterdam,WK036364,36364,Nieuwendammerdijk/Buiksloterdijk
+3636500,Tuindorp Oostzaan West,GM0363,363,Amsterdam,WK036365,36365,Tuindorp Oostzaan
+3636501,Tuindorp Oostzaan Oost,GM0363,363,Amsterdam,WK036365,36365,Tuindorp Oostzaan
+3636502,Terrasdorp,GM0363,363,Amsterdam,WK036365,36365,Tuindorp Oostzaan
+3636503,De Bongerd,GM0363,363,Amsterdam,WK036365,36365,Tuindorp Oostzaan
+3636601,Oostzanerdijk,GM0363,363,Amsterdam,WK036366,36366,Oostzanerwerf
+3636602,Walvisbuurt,GM0363,363,Amsterdam,WK036366,36366,Oostzanerwerf
+3636603,Twiske West,GM0363,363,Amsterdam,WK036366,36366,Oostzanerwerf
+3636604,Noorder IJplas,GM0363,363,Amsterdam,WK036366,36366,Oostzanerwerf
+3636605,Molenwijk,GM0363,363,Amsterdam,WK036366,36366,Oostzanerwerf
+3636606,Circus/Kermisbuurt,GM0363,363,Amsterdam,WK036366,36366,Oostzanerwerf
+3636700,Kadoelen,GM0363,363,Amsterdam,WK036367,36367,Kadoelen
+3636701,Twiske Oost,GM0363,363,Amsterdam,WK036367,36367,Kadoelen
+3636800,Baanakkerspark Noord,GM0363,363,Amsterdam,WK036368,36368,Waterlandpleinbuurt
+3636801,Baanakkerspark Zuid,GM0363,363,Amsterdam,WK036368,36368,Waterlandpleinbuurt
+3636802,Werengouw Midden,GM0363,363,Amsterdam,WK036368,36368,Waterlandpleinbuurt
+3636803,Markengouw Midden,GM0363,363,Amsterdam,WK036368,36368,Waterlandpleinbuurt
+3636804,Markengouw Zuid,GM0363,363,Amsterdam,WK036368,36368,Waterlandpleinbuurt
+3636805,Werengouw Zuid,GM0363,363,Amsterdam,WK036368,36368,Waterlandpleinbuurt
+3636900,Rode Kruisbuurt,GM0363,363,Amsterdam,WK036369,36369,Buikslotermeer
+3636902,Loenermark,GM0363,363,Amsterdam,WK036369,36369,Buikslotermeer
+3636909,Buikslotermeerplein,GM0363,363,Amsterdam,WK036369,36369,Buikslotermeer
+3636910,Plan van Gool,GM0363,363,Amsterdam,WK036369,36369,Buikslotermeer
+3636911,De Kleine Wereld,GM0363,363,Amsterdam,WK036369,36369,Buikslotermeer
+3636912,Buikslotermeer Noord,GM0363,363,Amsterdam,WK036369,36369,Buikslotermeer
+3637000,Banne Zuidwest,GM0363,363,Amsterdam,WK036370,36370,Banne Buiksloot
+3637001,Banne Zuidoost,GM0363,363,Amsterdam,WK036370,36370,Banne Buiksloot
+3637002,Banne Noordwest,GM0363,363,Amsterdam,WK036370,36370,Banne Buiksloot
+3637003,Banne Noordoost,GM0363,363,Amsterdam,WK036370,36370,Banne Buiksloot
+3637004,Buiksloterbreek,GM0363,363,Amsterdam,WK036370,36370,Banne Buiksloot
+3637005,Marjoleinterrein,GM0363,363,Amsterdam,WK036370,36370,Banne Buiksloot
+3637102,Papaverweg e.o.,GM0363,363,Amsterdam,WK036371,36371,Noordelijke IJ-oevers West
+3637104,Cornelis Douwesterrein,GM0363,363,Amsterdam,WK036371,36371,Noordelijke IJ-oevers West
+3637105,NDSM terrein,GM0363,363,Amsterdam,WK036371,36371,Noordelijke IJ-oevers West
+3637106,Buiksloterham,GM0363,363,Amsterdam,WK036371,36371,Noordelijke IJ-oevers West
+3637107,Overhoeks,GM0363,363,Amsterdam,WK036371,36371,Noordelijke IJ-oevers West
+3637200,Bedrijventerrein Hamerstraat,GM0363,363,Amsterdam,WK036372,36372,Noordelijke IJ-oevers Oost
+3637201,Zamenhofstraat e.o.,GM0363,363,Amsterdam,WK036372,36372,Noordelijke IJ-oevers Oost
+3637202,Bedrijventerrein Nieuwendammerdijk,GM0363,363,Amsterdam,WK036372,36372,Noordelijke IJ-oevers Oost
+3637300,Schellingwoude West,GM0363,363,Amsterdam,WK036373,36373,Waterland
+3637301,Schellingwoude Oost,GM0363,363,Amsterdam,WK036373,36373,Waterland
+3637302,Schellingwoude Noord,GM0363,363,Amsterdam,WK036373,36373,Waterland
+3637303,Durgerdam,GM0363,363,Amsterdam,WK036373,36373,Waterland
+3637304,Zwarte Gouw,GM0363,363,Amsterdam,WK036373,36373,Waterland
+3637305,Ransdorp,GM0363,363,Amsterdam,WK036373,36373,Waterland
+3637306,Holysloot,GM0363,363,Amsterdam,WK036373,36373,Waterland
+3637307,Zunderdorp,GM0363,363,Amsterdam,WK036373,36373,Waterland
+3637308,Noorderstrook West,GM0363,363,Amsterdam,WK036373,36373,Waterland
+3637309,Noorderstrook Oost,GM0363,363,Amsterdam,WK036373,36373,Waterland
+3637400,Nintemanterrein,GM0363,363,Amsterdam,WK036374,36374,Elzenhagen
+3637401,Elzenhagen Zuid,GM0363,363,Amsterdam,WK036374,36374,Elzenhagen
+3637402,Elzenhagen Noord,GM0363,363,Amsterdam,WK036374,36374,Elzenhagen
+3637500,Kortenaerkwartier,GM0363,363,Amsterdam,WK036375,36375,Chassébuurt
+3637501,Filips van Almondekwartier,GM0363,363,Amsterdam,WK036375,36375,Chassébuurt
+3637502,De Wester Quartier,GM0363,363,Amsterdam,WK036375,36375,Chassébuurt
+3637503,Van Brakelkwartier,GM0363,363,Amsterdam,WK036375,36375,Chassébuurt
+3637600,Buurt 3,GM0363,363,Amsterdam,WK036376,36376,Slotermeer-Noordoost
+3637601,Buurt 2,GM0363,363,Amsterdam,WK036376,36376,Slotermeer-Noordoost
+3637700,Slotermeer Zuid,GM0363,363,Amsterdam,WK036377,36377,Slotermeer-Zuidwest
+3637701,Noordoever Sloterplas,GM0363,363,Amsterdam,WK036377,36377,Slotermeer-Zuidwest
+3637702,Buurt 4 Oost,GM0363,363,Amsterdam,WK036377,36377,Slotermeer-Zuidwest
+3637703,Buurt 5 Noord,GM0363,363,Amsterdam,WK036377,36377,Slotermeer-Zuidwest
+3637704,Sloterpark,GM0363,363,Amsterdam,WK036377,36377,Slotermeer-Zuidwest
+3637705,Buurt 5 Zuid,GM0363,363,Amsterdam,WK036377,36377,Slotermeer-Zuidwest
+3637800,Buurt 6,GM0363,363,Amsterdam,WK036378,36378,Geuzenveld
+3637801,Buurt 7,GM0363,363,Amsterdam,WK036378,36378,Geuzenveld
+3637802,Buurt 8,GM0363,363,Amsterdam,WK036378,36378,Geuzenveld
+3637803,Buurt 9,GM0363,363,Amsterdam,WK036378,36378,Geuzenveld
+3637804,Eendrachtspark,GM0363,363,Amsterdam,WK036378,36378,Geuzenveld
+3637900,Osdorper Binnenpolder,GM0363,363,Amsterdam,WK036379,36379,Eendracht
+3637901,Buurt 10,GM0363,363,Amsterdam,WK036379,36379,Eendracht
+3638000,Ookmeer,GM0363,363,Amsterdam,WK036380,36380,Lutkemeer/Ookmeer
+3638001,Osdorper Bovenpolder,GM0363,363,Amsterdam,WK036380,36380,Lutkemeer/Ookmeer
+3638002,Bedrijvenpark Lutkemeer,GM0363,363,Amsterdam,WK036380,36380,Lutkemeer/Ookmeer
+3638100,Wildeman,GM0363,363,Amsterdam,WK036381,36381,Osdorp-Oost
+3638101,Meer en Oever,GM0363,363,Amsterdam,WK036381,36381,Osdorp-Oost
+3638102,Osdorpplein e.o.,GM0363,363,Amsterdam,WK036381,36381,Osdorp-Oost
+3638103,Calandlaan/Lelylaan,GM0363,363,Amsterdam,WK036381,36381,Osdorp-Oost
+3638104,Osdorp Zuidoost,GM0363,363,Amsterdam,WK036381,36381,Osdorp-Oost
+3638200,Osdorp Midden Noord,GM0363,363,Amsterdam,WK036382,36382,Osdorp-Midden
+3638201,Osdorp Midden Zuid,GM0363,363,Amsterdam,WK036382,36382,Osdorp-Midden
+3638202,Zuidwestkwadrant Osdorp Noord,GM0363,363,Amsterdam,WK036382,36382,Osdorp-Midden
+3638203,Zuidwestkwadrant Osdorp Zuid,GM0363,363,Amsterdam,WK036382,36382,Osdorp-Midden
+3638300,De Punt,GM0363,363,Amsterdam,WK036383,36383,De Punt
+3638301,Bedrijvencentrum Osdorp,GM0363,363,Amsterdam,WK036383,36383,De Punt
+3638400,Middelveldsche Akerpolder,GM0363,363,Amsterdam,WK036384,36384,Middelveldsche Akerpolder
+3638401,De Aker West,GM0363,363,Amsterdam,WK036384,36384,Middelveldsche Akerpolder
+3638402,De Aker Oost,GM0363,363,Amsterdam,WK036384,36384,Middelveldsche Akerpolder
+3638500,Oostoever Sloterplas,GM0363,363,Amsterdam,WK036385,36385,Slotervaart Noord
+3638501,Emanuel van Meterenbuurt,GM0363,363,Amsterdam,WK036385,36385,Slotervaart Noord
+3638502,Jacob Geelbuurt,GM0363,363,Amsterdam,WK036385,36385,Slotervaart Noord
+3638600,Overtoomse Veld Noord,GM0363,363,Amsterdam,WK036386,36386,Overtoomse Veld
+3638601,Overtoomse Veld Zuid,GM0363,363,Amsterdam,WK036386,36386,Overtoomse Veld
+3638602,Rembrandtpark Noord,GM0363,363,Amsterdam,WK036386,36386,Overtoomse Veld
+3638603,Rembrandtpark Zuid,GM0363,363,Amsterdam,WK036386,36386,Overtoomse Veld
+3638604,Johan Jongkindbuurt,GM0363,363,Amsterdam,WK036386,36386,Overtoomse Veld
+3638605,Lucas/Andreasziekenhuis e.o.,GM0363,363,Amsterdam,WK036386,36386,Overtoomse Veld
+3638700,Koningin Wilhelminaplein,GM0363,363,Amsterdam,WK036387,36387,Westlandgracht
+3638701,Andreasterrein,GM0363,363,Amsterdam,WK036387,36387,Westlandgracht
+3638702,Delflandpleinbuurt Oost,GM0363,363,Amsterdam,WK036387,36387,Westlandgracht
+3638703,Delflandpleinbuurt West,GM0363,363,Amsterdam,WK036387,36387,Westlandgracht
+3638704,Riekerhaven,GM0363,363,Amsterdam,WK036387,36387,Westlandgracht
+3638705,Schipluidenbuurt,GM0363,363,Amsterdam,WK036387,36387,Westlandgracht
+3638800,Riekerpolder,GM0363,363,Amsterdam,WK036388,36388,Sloter-/Riekerpolder
+3638801,Park Haagseweg,GM0363,363,Amsterdam,WK036388,36388,Sloter-/Riekerpolder
+3638802,Nieuwe Meer,GM0363,363,Amsterdam,WK036388,36388,Sloter-/Riekerpolder
+3638803,Sloterweg e.o.,GM0363,363,Amsterdam,WK036388,36388,Sloter-/Riekerpolder
+3638804,Nieuw Sloten Noordwest,GM0363,363,Amsterdam,WK036388,36388,Sloter-/Riekerpolder
+3638805,Nieuw Sloten Noordoost,GM0363,363,Amsterdam,WK036388,36388,Sloter-/Riekerpolder
+3638806,Belgiëplein e.o.,GM0363,363,Amsterdam,WK036388,36388,Sloter-/Riekerpolder
+3638807,Nieuw Sloten Zuidwest,GM0363,363,Amsterdam,WK036388,36388,Sloter-/Riekerpolder
+3638808,Nieuw Sloten Zuidoost,GM0363,363,Amsterdam,WK036388,36388,Sloter-/Riekerpolder
+3638809,Dorp Sloten,GM0363,363,Amsterdam,WK036388,36388,Sloter-/Riekerpolder
+3638900,Louis Chrispijnbuurt,GM0363,363,Amsterdam,WK036389,36389,Slotervaart Zuid
+3638901,Jacques Veltmanbuurt,GM0363,363,Amsterdam,WK036389,36389,Slotervaart Zuid
+3638902,Staalmanbuurt,GM0363,363,Amsterdam,WK036389,36389,Slotervaart Zuid
+3638903,Medisch Centrum Slotervaart,GM0363,363,Amsterdam,WK036389,36389,Slotervaart Zuid
+3639000,Gelderlandpleinbuurt,GM0363,363,Amsterdam,WK036390,36390,Buitenveldert-West
+3639002,Buitenveldert Midden Zuid,GM0363,363,Amsterdam,WK036390,36390,Buitenveldert-West
+3639003,Buitenveldert Zuidwest,GM0363,363,Amsterdam,WK036390,36390,Buitenveldert-West
+3639004,Amsterdamse Bos,GM0363,363,Amsterdam,WK036390,36390,Buitenveldert-West
+3639008,Buitenveldert West Midden,GM0363,363,Amsterdam,WK036390,36390,Buitenveldert-West
+3639009,Zuiderhof,GM0363,363,Amsterdam,WK036390,36390,Buitenveldert-West
+3639100,De Klenckebuurt,GM0363,363,Amsterdam,WK036391,36391,Buitenveldert-Oost
+3639101,Buitenveldert Oost Midden,GM0363,363,Amsterdam,WK036391,36391,Buitenveldert-Oost
+3639102,Buitenveldert Zuidoost,GM0363,363,Amsterdam,WK036391,36391,Buitenveldert-Oost
+3639103,Amstelpark,GM0363,363,Amsterdam,WK036391,36391,Buitenveldert-Oost
+3639200,Hoofdcentrum Zuidoost,GM0363,363,Amsterdam,WK036392,36392,Amstel III/Bullewijk
+3639201,Amstel III deel A/B Noord,GM0363,363,Amsterdam,WK036392,36392,Amstel III/Bullewijk
+3639202,Amstel III deel C/D Noord,GM0363,363,Amsterdam,WK036392,36392,Amstel III/Bullewijk
+3639203,Amstel III deel A/B Zuid,GM0363,363,Amsterdam,WK036392,36392,Amstel III/Bullewijk
+3639204,Amstel III deel C/D Zuid,GM0363,363,Amsterdam,WK036392,36392,Amstel III/Bullewijk
+3639205,AMC,GM0363,363,Amsterdam,WK036392,36392,Amstel III/Bullewijk
+3639206,Hoge Dijk,GM0363,363,Amsterdam,WK036392,36392,Amstel III/Bullewijk
+3639300,Venserpolder West,GM0363,363,Amsterdam,WK036393,36393,"Bijlmer Centrum (D,F,H)"
+3639301,Venserpolder Oost,GM0363,363,Amsterdam,WK036393,36393,"Bijlmer Centrum (D,F,H)"
+3639302,D-buurt,GM0363,363,Amsterdam,WK036393,36393,"Bijlmer Centrum (D,F,H)"
+3639303,F-buurt,GM0363,363,Amsterdam,WK036393,36393,"Bijlmer Centrum (D,F,H)"
+3639304,Amsterdamse Poort,GM0363,363,Amsterdam,WK036393,36393,"Bijlmer Centrum (D,F,H)"
+3639305,Hoptille,GM0363,363,Amsterdam,WK036393,36393,"Bijlmer Centrum (D,F,H)"
+3639306,Rechte H-buurt,GM0363,363,Amsterdam,WK036393,36393,"Bijlmer Centrum (D,F,H)"
+3639307,Hakfort/Huigenbos,GM0363,363,Amsterdam,WK036393,36393,"Bijlmer Centrum (D,F,H)"
+3639308,Huntum,GM0363,363,Amsterdam,WK036393,36393,"Bijlmer Centrum (D,F,H)"
+3639309,Vogeltjeswei,GM0363,363,Amsterdam,WK036393,36393,"Bijlmer Centrum (D,F,H)"
+3639310,Nelson Mandelapark,GM0363,363,Amsterdam,WK036393,36393,"Bijlmer Centrum (D,F,H)"
+3639400,E-buurt,GM0363,363,Amsterdam,WK036394,36394,"Bijlmer Oost (E,G,K)"
+3639401,G-buurt West,GM0363,363,Amsterdam,WK036394,36394,"Bijlmer Oost (E,G,K)"
+3639402,Bijlmermuseum Noord,GM0363,363,Amsterdam,WK036394,36394,"Bijlmer Oost (E,G,K)"
+3639403,Kortvoort,GM0363,363,Amsterdam,WK036394,36394,"Bijlmer Oost (E,G,K)"
+3639404,Kelbergen,GM0363,363,Amsterdam,WK036394,36394,"Bijlmer Oost (E,G,K)"
+3639405,K-buurt Midden,GM0363,363,Amsterdam,WK036394,36394,"Bijlmer Oost (E,G,K)"
+3639406,K-buurt Zuidoost,GM0363,363,Amsterdam,WK036394,36394,"Bijlmer Oost (E,G,K)"
+3639407,K-buurt Zuidwest,GM0363,363,Amsterdam,WK036394,36394,"Bijlmer Oost (E,G,K)"
+3639408,Grunder/Koningshoef,GM0363,363,Amsterdam,WK036394,36394,"Bijlmer Oost (E,G,K)"
+3639409,G-buurt Oost,GM0363,363,Amsterdam,WK036394,36394,"Bijlmer Oost (E,G,K)"
+3639410,Kantershof,GM0363,363,Amsterdam,WK036394,36394,"Bijlmer Oost (E,G,K)"
+3639411,Gooise Kant,GM0363,363,Amsterdam,WK036394,36394,"Bijlmer Oost (E,G,K)"
+3639412,G-buurt Noord,GM0363,363,Amsterdam,WK036394,36394,"Bijlmer Oost (E,G,K)"
+3639413,Bijlmermuseum Zuid,GM0363,363,Amsterdam,WK036394,36394,"Bijlmer Oost (E,G,K)"
+3639500,L-buurt,GM0363,363,Amsterdam,WK036395,36395,Nellestein
+3639501,Gaasperpark,GM0363,363,Amsterdam,WK036395,36395,Nellestein
+3639502,Gaasperplas,GM0363,363,Amsterdam,WK036395,36395,Nellestein
+3639600,Holendrecht West,GM0363,363,Amsterdam,WK036396,36396,Holendrecht/Reigersbos
+3639601,Reigersbos Noord,GM0363,363,Amsterdam,WK036396,36396,Holendrecht/Reigersbos
+3639602,Holendrecht Oost,GM0363,363,Amsterdam,WK036396,36396,Holendrecht/Reigersbos
+3639603,Gaasperdam Noord,GM0363,363,Amsterdam,WK036396,36396,Holendrecht/Reigersbos
+3639604,Gaasperdam Zuid,GM0363,363,Amsterdam,WK036396,36396,Holendrecht/Reigersbos
+3639605,Reigersbos Midden,GM0363,363,Amsterdam,WK036396,36396,Holendrecht/Reigersbos
+3639606,Reigersbos Zuid,GM0363,363,Amsterdam,WK036396,36396,Holendrecht/Reigersbos
+3639700,Gein Noordwest,GM0363,363,Amsterdam,WK036397,36397,Gein
+3639701,Gein Zuidwest,GM0363,363,Amsterdam,WK036397,36397,Gein
+3639702,Gein Noordoost,GM0363,363,Amsterdam,WK036397,36397,Gein
+3639703,Gein Zuidoost,GM0363,363,Amsterdam,WK036397,36397,Gein
+3639800,Dorp Driemond,GM0363,363,Amsterdam,WK036398,36398,Driemond
+3639801,Landelijk gebied Driemond,GM0363,363,Amsterdam,WK036398,36398,Driemond
+3639997,Groot binnenwater,GM0363,363,Amsterdam,WK036399,36399,Groot water
+3639998,Groot binnenwater,GM0363,363,Amsterdam,WK036399,36399,Groot water
