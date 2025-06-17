@@ -1,1 +1,2 @@
 2022-cbs-pc6huisnr20210801_buurt/pc6hnr20220801_gwb.csv filter=lfs diff=lfs merge=lfs -text
+cbs_pc6_2022_vol/pc6_2022_vol.xlsx filter=lfs diff=lfs merge=lfs -text
