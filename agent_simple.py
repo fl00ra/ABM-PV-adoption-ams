@@ -1,15 +1,19 @@
 import numpy as np
-from config import household_type_map, THETA
+from config import THETA
 from scipy.stats import truncnorm
 
 class HouseholdAgent:
     def __init__(self, agent_id, model,
                  income,
-                 location_code,
+                #  location_code,
                  energielabel=None, elek_usage=None, elec_price=0.4,
                  elek_return=None, household_type=None,
-                 lihe=None, lekwi=None, lihezlek=None, bbihj=None,
-                 adopted=False):
+                 postcode6=None, buurt_code=None,
+                 lihe=None, 
+                #  lekwi=None, lihezlek=None,
+                 bbihj=None,
+                 adopted=False
+                 ):
         
         self.id = agent_id
         self.model = model 
@@ -20,10 +24,12 @@ class HouseholdAgent:
         self.policy_applied = False
 
         # spatial location 
-        self.location_code = location_code  # GWBCODEJJJJ
-        self.gemeente_code = location_code[:4]
-        self.wijk_code = location_code[4:6]
-        self.buurt_code = location_code[6:8]
+        # self.location_code = location_code  # GWBCODEJJJJ
+        # self.gemeente_code = location_code[:4]
+        # self.wijk_code = location_code[4:6]
+        # self.buurt_code = location_code[6:8]
+        self.buurt_code = buurt_code  
+
 
         # electricity attributes
         self.elek = elek_usage
@@ -33,7 +39,7 @@ class HouseholdAgent:
         self.label_score = self._label_to_score(energielabel)
 
         self.household_type = household_type
-        self.household_type_vector = household_type_map.get(household_type, [0, 0, 0])
+        # self.household_type_vector = household_type_map.get(household_type, [0, 0, 0])
         self.bbihj = bbihj
 
         self.system_size = self._sample_system_size()
@@ -48,8 +54,8 @@ class HouseholdAgent:
         self.adoption_time = None
 
         self.lihe = lihe
-        self.lekwi = lekwi
-        self.lihezlek = lihezlek
+        # self.lekwi = lekwi
+        # self.lihezlek = lihezlek
 
         self.Y = self._infer_Y()
 
@@ -59,6 +65,8 @@ class HouseholdAgent:
 
         self.status = "active"  # or deliberate, exit
         self.steps_without_adoption = 0
+
+        self.postcode6 = postcode6
 
         self.adoption_track = []
         self.history = []  
@@ -70,25 +78,6 @@ class HouseholdAgent:
         return raw_V / THETA
         # return raw_V
 
-
-    # def compute_Si(self):
-    #     """S_i = n_adopted / n_total"""
-    #     self.n_adopted_neighbors = sum(1 for neighbor in self.neighbors if neighbor.adopted)
-    #     if self.n_neighbors == 0:
-    #         return 0
-    #     return self.n_adopted_neighbors / self.n_neighbors
-
-    # def compute_Si(self):
-    #     adopted_weight = 0
-    #     total_weight = 0
-
-    #     for neighbor in self.neighbors:
-    #         w = self._spatial_weight(neighbor)
-    #         if neighbor.adopted:
-    #             adopted_weight += w
-    #         total_weight += w
-
-    #     return adopted_weight / total_weight if total_weight > 0 else 0
     def compute_Si(self):
         adopted_weight = 0
         total_weight = 0
@@ -102,15 +91,15 @@ class HouseholdAgent:
         return adopted_weight / total_weight if total_weight > 0 else 0
 
 
-    def _spatial_weight(self, neighbor):
-        if self.location_code == neighbor.location_code:
-            return 1.0  
-        elif self.gemeente_code == neighbor.gemeente_code and self.wijk_code == neighbor.wijk_code:
-            return 0.6  
-        elif self.gemeente_code == neighbor.gemeente_code:
-            return 0.3  
-        else:
-            return 0.1  
+    # def _spatial_weight(self, neighbor):
+    #     if self.location_code == neighbor.location_code:
+    #         return 1.0  
+    #     elif self.gemeente_code == neighbor.gemeente_code and self.wijk_code == neighbor.wijk_code:
+    #         return 0.6  
+    #     elif self.gemeente_code == neighbor.gemeente_code:
+    #         return 0.3  
+    #     else:
+    #         return 0.1  
         
 
     
@@ -314,19 +303,18 @@ class HouseholdAgent:
         if self.income is not None:
             if self.income < 20000:
                 base_Y -= 1
-            elif self.income > 60000:
+            elif self.income > 55000:
                 base_Y += 2
-        if self.lihe or self.lekwi or self.lihezlek:
+        if self.lihe:
             base_Y -= 1.5
         return np.clip(base_Y + np.random.normal(0, 1), 3, 10)
 
     def _sample_social_weight(self):
-
         dist_params = {
             "with_kids": (1.2, 0.1),
             "couple_no_kids": (1.0, 0.1),
             "single": (0.8, 0.1),
-            "nonfamily_group": (0.6, 0.1)
+            "single_parent": (0.9, 0.1)
         }
         mu, sigma = dist_params.get(self.household_type, (1.0, 0.1))
         return np.clip(np.random.normal(mu, sigma), 0.3, 2.0)

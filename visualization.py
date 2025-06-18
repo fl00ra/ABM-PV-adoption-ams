@@ -3,7 +3,7 @@ import networkx as nx
 import numpy as np
 import os
 
-def plot_all_results(strategy_results_dict, save_path="result/adoption_3status.png"):
+def plot_all_results(strategy_results_dict, save_path="result/adoption_withdata.png"):
     fig, axs = plt.subplots(1, 3, figsize=(16, 5))
     axs = axs.flatten()
 
@@ -54,5 +54,5 @@ def visualize_network_diffusion(model, steps_to_plot=[0, 5, 10, 20, 30], save_di
         plt.title(f"Network Diffusion at Time Step {t}", fontsize=14)
         plt.axis('off')
         plt.tight_layout()
-        plt.savefig(f"{save_dir}/network_t{t}_3status.png", dpi=300)
+        plt.savefig(f"{save_dir}/network_t{t}_withdata.png", dpi=300)
         # plt.show()
