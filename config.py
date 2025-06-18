@@ -9,7 +9,7 @@ import pandas as pd
 # n_agents = compute_n_agents()
 
 n_agents = 1000
-n_steps = 30
+n_steps = 20
 
 beta = [0.4, 1.2]  # β₁, β₂
 # gamma = [0.6, -0.4, -0.3, -0.5, 0.3, 0.5, 0.2]

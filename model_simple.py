@@ -3,12 +3,16 @@ from agent_simple import HouseholdAgent
 from network_geo import build_net
 from data_loader import load_amsterdam_data
 from collections import defaultdict
+from policy_intervention import Policy, compute_gain
+
 
 class ABM:
     def __init__(self,
                  n_agents,
                  beta,
-                 policy_dict,
+                 #policy_dict,
+                 #feed_mode,
+                 behavior_mode,
                  k_small_world,
                  net_level,
                  load_data=load_amsterdam_data
@@ -16,13 +20,17 @@ class ABM:
 
         self.n_agents = n_agents
         self.beta = beta
-        self.policy_dict = policy_dict
+        self.policy = Policy(elec_price=0.4, feed_mode="net_metering", behavior_mode=behavior_mode)
+        # self.policy_dict = policy_dict
         self.k_small_world = k_small_world
         self.net_level = net_level
 
         self.agent_data = load_data()
         self.n_agents = min(self.n_agents, len(self.agent_data))
         self.agents = self._init_agents()
+        # self.policy_object = Policy(elec_price=0.4, policy_type="net_metering")
+        self.compute_gain_fn = lambda agent, t: compute_gain(agent, t, self.policy)
+
 
         self.nx_graph = build_net(
             self.agents,
@@ -35,8 +43,6 @@ class ABM:
             self.nx_graph.nodes[agent.id]["adopted"] = agent.adopted
             self.nx_graph.nodes[agent.id]["income"] = agent.income
             self.nx_graph.nodes[agent.id]["buurt_code"] = agent.buurt_code
-
-        self._assign_targeting(self.agents)
 
         self.results = {
             "adoption_rate": [],
@@ -63,16 +69,6 @@ class ABM:
             agents.append(agent)
         return agents
 
-    def _assign_targeting(self, agents):
-        strategy = self.policy_dict.get("strategy_tag", "")
-
-        if strategy == "reduce_cost":
-            for agent in agents:
-                agent.is_targeted = True
-
-        elif strategy == "no_policy":
-            for agent in agents:
-                agent.is_targeted = False
 
     def step(self, t):
         for agent in self.agents:

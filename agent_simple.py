@@ -46,7 +46,7 @@ class HouseholdAgent:
         self.pv_price = self._sample_pv_price()
         self.y_pv = self._sample_ypv()
         self.cost = self._compute_cost()
-        self.gain = self._compute_gain()
+        # self.gain = self._compute_gain()
         self.beta0 = self.compute_beta0()
 
         self.neighbors = []
@@ -71,12 +71,15 @@ class HouseholdAgent:
         self.adoption_track = []
         self.history = []  
 
-    def compute_Vi(self):
+    def compute_Vi(self, timestep=0):
         """Vi = (Y * Gi - Ci) / θ"""
         # raw_V = self.gain - self.lambda_loss_aversion * self.cost
+        if not hasattr(self, "gain") or self.gain is None:
+            self.gain = self.model.compute_gain_fn(self, timestep)
         raw_V = self.Y * self.gain - self.cost
         return raw_V / THETA
         # return raw_V
+
 
     def compute_Si(self):
         adopted_weight = 0
@@ -124,9 +127,9 @@ class HouseholdAgent:
 
 
 
-    def compute_adoption_probability(self):
+    def compute_adoption_probability(self, timestep=0):
         """P_i(t) = sigmoid(β₀ᵢ + β₁V + β₂S)"""
-        V = self.compute_Vi()
+        V = self.compute_Vi(timestep)
         S = self.compute_Si()
         beta = self.model.beta  # [β₁, β₂]
 
@@ -137,21 +140,24 @@ class HouseholdAgent:
 
         return prob, V, S, beta0
 
-    
+
     
     def step(self, timestep=None):
         """
         behavioral logic with accumulation-based adoption (adding inertia mechanism.
         """
-        self.apply_policy(timestep)
 
         if self.status == "exit":
             return  
 
         if self.adopted:
             return
+        
+        self.model.policy.apply_to(self, timestep)
 
-        prob, V, S, beta0 = self.compute_adoption_probability()
+        # self.gain = self.model.compute_gain_fn(self, timestep)
+
+        prob, V, S, beta0 = self.compute_adoption_probability(timestep)
         self.history.append(prob)
 
         # # accumulate motivation with decay (λ = 0.8)
@@ -187,58 +193,29 @@ class HouseholdAgent:
 
 
 
-
-
-
-
-    def apply_policy(self, timestep=None):
-        if self.adopted or self.policy_applied:
-            return  
-
-        policy = self.model.policy_dict
-        strategy = policy.get("strategy_tag", "")
-
-        if strategy == "reduce_cost":
-            self.cost *= 0.8  
-
-        elif strategy == "no_policy":
-            pass
-
-        self.policy_applied = True
-
     # def apply_policy(self, timestep=None):
     #     if self.adopted or self.policy_applied:
     #         return  
-    
+
     #     policy = self.model.policy_dict
     #     strategy = policy.get("strategy_tag", "")
 
-    # # feed-in tariff may be added later
-    #     if strategy == "fast_adoption":
-    #             if self.is_targeted:
-    #                 self.cost *= 0.85  # reduce Ci
-    #                 # self.gain += 500  # feed-in tariff
+    #     if strategy == "reduce_cost":
+    #         self.cost *= 0.8  
 
-    #     elif strategy == "support_vulnerable":
-    #         if getattr(self, "is_targeted", False):
-    #             self.cost *= 0.8  
-    #             # self.gain += 200
-    #             # self.Y += 0.2  # less long-term horizon
-
-
-    #     elif strategy == "universal_nudge":
-    #         self.cost -= 300
-    #         # self.gain += 500
-
-    #     elif strategy == "behavioral_first":
-    #         # if getattr(self, "is_targeted", False):
-    #             # self.adoption_threshold *= 0.8  # reduce threshold
-    #             # self.Y += 1  # simulate awareness to think long-term
-    #         pass
     #     elif strategy == "no_policy":
     #         pass
 
-    #     self.policy_applied = True 
+    #     self.policy_applied = True
+
+    # def apply_policy(self, timestep=None):
+    #     if self.adopted or self.policy_applied:
+    #         return
+
+    #     policy = self.model.policy 
+    #     policy.apply_to(self, timestep)
+
+    #     self.policy_applied = True
 
 
     def _label_to_score(self, label):
@@ -275,28 +252,28 @@ class HouseholdAgent:
         """
         return self.system_size * self.pv_price
 
-    def _compute_gain(self):
-        """
-        Gain = 
-        if Ei_gen ≤ ELEK: ELEK * P_elek
-        else: ELEK * P_elek + surplus * P_feed
-        """
-        Ei_gen = self.system_size * self.y_pv
-        self.gen_electricity = Ei_gen
+    # def _compute_gain(self):
+    #     """
+    #     Gain = 
+    #     if Ei_gen ≤ ELEK: ELEK * P_elek
+    #     else: ELEK * P_elek + surplus * P_feed
+    #     """
+    #     Ei_gen = self.system_size * self.y_pv
+    #     self.gen_electricity = Ei_gen
 
-        elec_price = self.elec_price  # €/kWh
-        feed_in_tariff = 0.10 
+    #     elec_price = self.elec_price  # €/kWh
+    #     feed_in_tariff = 0.10 
 
-        if self.elek is None:
-            self.elek = 2500  # fallback default
+    #     if self.elek is None:
+    #         self.elek = 2500  # fallback default
 
-        if Ei_gen <= self.elek:
-            return Ei_gen * elec_price
-        else:
-            saved = self.elek * elec_price
-            surplus = Ei_gen - self.elek
-            exported = surplus * feed_in_tariff
-            return saved + exported
+    #     if Ei_gen <= self.elek:
+    #         return Ei_gen * elec_price
+    #     else:
+    #         saved = self.elek * elec_price
+    #         surplus = Ei_gen - self.elek
+    #         exported = surplus * feed_in_tariff
+    #         return saved + exported
 
     def _infer_Y(self):
         base_Y = 3
