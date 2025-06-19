@@ -1,5 +1,5 @@
 from model_simple import ABM
-from config import n_agents, n_steps, beta, k_small_world, net_level
+from config import n_agents, n_steps, k_small_world, net_level, beta
 from visualization import plot_adoption_by_group, plot_network, plot_adoption_rate, plot_new_adopters, plot_status_transitions, plot_distributions
 
 def run_simulation(behavior_mode):

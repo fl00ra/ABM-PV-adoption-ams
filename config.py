@@ -11,9 +11,12 @@ import pandas as pd
 n_agents = 1000
 n_steps = 40
 
+
+beta1_range = [0.2, 0.4, 0.6, 0.8, 1.0]
+beta2_range = [0.5, 1.0, 1.5, 2.0]
+
 beta = [0.2, 0.8]  # β₁, β₂
-# gamma = [0.6, -0.4, -0.3, -0.5, 0.3, 0.5, 0.2]
-# gamma = [income, lihe, lekwi, lihezlek, no_kids, with_kids, nonfamily_group]
+
 THETA = 2000
 
 

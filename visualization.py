@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
-import networkx as nx
-import os
-from collections import Counter
 import numpy as np
+import networkx as nx
+from collections import Counter
+from mpl_toolkits.mplot3d import Axes3D
+
 
 def plot_adoption_rate(results_by_behavior):
     plt.figure(figsize=(8, 5))
@@ -105,4 +106,69 @@ def plot_network(model, steps_to_plot=[0, 5, 10, 20, 30], save_dir="result"):
         plt.axis('off')
         plt.tight_layout()
         plt.savefig(f"{save_dir}/network_t{t}_withdataandpolicy.png", dpi=300)
-        # plt.show()
+
+# def plot_beta_surface(beta_grid, final_adoptions, save_path="result/beta_surface.png"):
+#     beta1_vals = sorted(set(b[0] for b in beta_grid))
+#     beta2_vals = sorted(set(b[1] for b in beta_grid))
+#     B1, B2 = np.meshgrid(beta1_vals, beta2_vals)
+#     Z = np.array([[final_adoptions.get((b1, b2), 0) for b1 in beta1_vals] for b2 in beta2_vals])
+
+#     fig = plt.figure(figsize=(10, 7))
+#     ax = fig.add_subplot(111, projection='3d')
+#     ax.plot_surface(B1, B2, Z, cmap='viridis')
+#     ax.set_xlabel("β₁")
+#     ax.set_ylabel("β₂")
+#     ax.set_zlabel("Adoption Rate")
+#     ax.set_title("Adoption Surface by β Parameters")
+#     plt.tight_layout()
+#     plt.savefig(save_path)
+#     plt.close()
+
+# def plot_beta(beta_grid, final_adoptions):
+#     beta1_vals = sorted(set(b1 for b1, _ in beta_grid))
+#     beta2_vals = sorted(set(b2 for _, b2 in beta_grid))
+
+#     Z = np.array([[final_adoptions.get((b1, b2), 0)
+#                    for b2 in beta2_vals] for b1 in beta1_vals])
+
+#     B1, B2 = np.meshgrid(beta2_vals, beta1_vals)
+
+#     plt.figure(figsize=(8, 6))
+#     cp = plt.contourf(B2, B1, Z, cmap="viridis", levels=20)
+#     plt.colorbar(cp, label='Final Adoption Rate')
+#     plt.xlabel("Beta 2 (Social Influence Weight)")
+#     plt.ylabel("Beta 1 (Economic Rationality Weight)")
+#     plt.title("Adoption Rate across Beta Parameters")
+#     plt.tight_layout()
+#     plt.savefig("result/beta_contour.png", dpi=300)
+#     plt.close()
+
+
+def plot_beta(beta_grid, final_adoptions, save_path="result/beta_contour.png"):
+    beta1_vals = sorted(set(b1 for b1, _ in beta_grid))
+    beta2_vals = sorted(set(b2 for _, b2 in beta_grid))
+
+    Z = np.array([[final_adoptions.get((b1, b2), 0)
+                   for b2 in beta2_vals] for b1 in beta1_vals])
+
+    B2, B1 = np.meshgrid(beta2_vals, beta1_vals)
+
+    plt.figure(figsize=(9, 6))
+    cp = plt.contourf(B2, B1, Z, levels=20, cmap='viridis')
+    cs = plt.contour(B2, B1, Z, levels=10, colors='black', linewidths=0.5)
+    plt.clabel(cs, fmt="%.2f", fontsize=8)
+
+    max_pos = max(final_adoptions, key=final_adoptions.get)
+    plt.plot(max_pos[1], max_pos[0], 'ro', markersize=6, label='Max')
+
+    plt.colorbar(cp, label='Final Adoption Rate')
+    plt.xlabel("Beta 2 (Social Influence Weight)", fontsize=12)
+    plt.ylabel("Beta 1 (Economic Rationality Weight)", fontsize=12)
+    plt.title("Adoption Rate across Beta Parameters", fontsize=14)
+    plt.xticks(beta2_vals)
+    plt.yticks(beta1_vals)
+    plt.grid(True, linestyle='--', alpha=0.3)
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(save_path, dpi=300)
+    plt.close()
