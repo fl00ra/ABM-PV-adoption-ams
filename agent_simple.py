@@ -122,7 +122,7 @@ class HouseholdAgent:
         # if self.lihezlek:
         #     base += -0.3
         # return base
-        return np.random.normal(loc=-2.0, scale=0.5)
+        return np.random.normal(loc=-3.0, scale=0.5)
 
 
 
@@ -284,7 +284,7 @@ class HouseholdAgent:
                 base_Y += 2
         if self.lihe:
             base_Y -= 1.5
-        return np.clip(base_Y + np.random.normal(0, 1), 3, 10)
+        return np.clip(base_Y + np.random.normal(0, 1), 2, 6)
 
     def _sample_social_weight(self):
         dist_params = {

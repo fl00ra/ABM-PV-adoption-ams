@@ -58,7 +58,7 @@ def load_amsterdam_data(max_agents=n_agents):
         for i in range(total):
             income = max(10000, sample_income())
             energielabel = random.choices(list("ABCDEFG"), weights=[0.15, 0.2, 0.25, 0.2, 0.1, 0.07, 0.03])[0]
-            adopted = random.random() < 0.25
+            adopted = random.random() < 0.15
 
             agent = {
                 "id": agent_id,

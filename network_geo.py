@@ -69,6 +69,8 @@ def add_long_links(agents, agent_k_map, filter_fn=None):
                 continue
 
             agent.neighbors.append(candidate)
+            candidate.neighbors.append(agent)
+
             new_links.add(candidate)
 
         agent.n_neighbors = len(agent.neighbors)
