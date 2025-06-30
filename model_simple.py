@@ -1,7 +1,7 @@
 import numpy as np
 from agent_simple import HouseholdAgent
 from network_geo import build_net
-from data_loader import load_amsterdam_data
+from data_loader import load_amsterdam_data, dynamic_elec_price, get_income_quantiles
 from collections import defaultdict
 from policy_intervention import Policy, compute_gain
 
@@ -13,16 +13,20 @@ class ABM:
                  behavior_mode,
                  k_small_world,
                  net_level,
+                 beta0_dist_type="unimodal",
+                 enable_feed_change=True,
                  load_data=load_amsterdam_data
                  ):
 
         self.n_agents = n_agents
         self.beta = beta
-        self.policy = Policy(elec_price=0.4, feed_mode="net_metering", behavior_mode=behavior_mode)
+        self.policy = Policy(elec_price=0.4, behavior_mode=behavior_mode, enable_feed_change=enable_feed_change)
         self.k_small_world = k_small_world
         self.net_level = net_level
+        self.beta0_dist_type = beta0_dist_type 
 
         self.agent_data = load_data()
+        self.income_quantiles = get_income_quantiles(self.agent_data) 
         self.n_agents = min(self.n_agents, len(self.agent_data))
         self.agents = self._init_agents()
         self.compute_gain_fn = lambda agent, t: compute_gain(agent, t, self.policy)
@@ -32,7 +36,10 @@ class ABM:
             self.agents,
             level=self.net_level,
             filter_fn=None,
-            return_nx=True
+            return_nx=True,
+            assign_social_weight=True,
+            hh_weight= 0.1,
+            income_weight= 0.9
         )
 
         for agent in self.agents:
@@ -51,7 +58,9 @@ class ABM:
                 "P": []
             }
         }
-
+    def get_dynamic_elec_price(self, timestep):
+        return dynamic_elec_price(timestep)
+    
     def _init_agents(self):
         agents = []
         for d in self.agent_data:
@@ -61,7 +70,7 @@ class ABM:
                 income=d["income"],
                 energielabel=d.get("energielabel"),
                 elek_usage=d.get("elek_usage"),
-                elec_price=d.get("elec_price", 0.4),
+                elec_price=d.get("elec_price"),
                 household_type=d.get("household_type", "single"),
                 postcode6=d.get("postcode6"),
                 buurt_code=d.get("buurt_code"),
@@ -69,6 +78,9 @@ class ABM:
                 adopted=d.get("adopted", False)
             )
             agents.append(agent)
+
+        self.beta0_values = [agent.beta0 for agent in agents]
+
         return agents
 
 
@@ -80,6 +92,18 @@ class ABM:
         for t in range(n_steps):
             self.step(t)
             self._record(t)
+            
+            if t % 5 == 0:
+                print(f"\n[Time {t}] Policy: {self.policy.behavior_mode}")
+                print(f"Adoption rate: {self.results['adoption_rate'][-1]:.2%}")
+
+    def change_policy(self, new_behavior_mode, timestep):
+        """
+        Change the policy behavior mode at a specific timestep.
+        """
+        self.policy.behavior_mode = new_behavior_mode
+        print(f"\n[Policy Change at T={timestep}] New policy: {new_behavior_mode}")
+
 
     def _record(self, t):
         n_adopted = sum(1 for a in self.agents if a.adopted)
@@ -107,7 +131,7 @@ class ABM:
 
         V_vals, S_vals, P_vals = [], [], []
         for a in self.agents:
-            p, V, S, _ = a.compute_adoption_probability()
+            p, V, S, _ = a.compute_adoption_probability(timestep=t)
             V_vals.append(V)
             S_vals.append(S)
             P_vals.append(p)

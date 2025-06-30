@@ -6,7 +6,7 @@ class HouseholdAgent:
     def __init__(self, agent_id, model,
                  income,
                 #  location_code,
-                 energielabel=None, elek_usage=None, elec_price=0.4,
+                 energielabel=None, elek_usage=None, elec_price=None,
                  elek_return=None, household_type=None,
                  postcode6=None, buurt_code=None,
                  lihe=None, 
@@ -19,9 +19,11 @@ class HouseholdAgent:
         self.model = model 
 
         self.income = income
+        self.income_level = self._categorize_income()
         self.adopted = adopted
         self.is_targeted = False
-        self.policy_applied = False
+        # self.policy_applied = False
+        # self._effective_cost = None
 
         # spatial location 
         # self.location_code = location_code  # GWBCODEJJJJ
@@ -33,19 +35,19 @@ class HouseholdAgent:
 
         # electricity attributes
         self.elek = elek_usage
-        self.elek_return = elek_return
+        # self.elek_return = elek_return
         self.elec_price = elec_price
         self.energielabel = energielabel
         self.label_score = self._label_to_score(energielabel)
 
         self.household_type = household_type
         # self.household_type_vector = household_type_map.get(household_type, [0, 0, 0])
-        self.bbihj = bbihj
+        # self.bbihj = bbihj
 
         self.system_size = self._sample_system_size()
         self.pv_price = self._sample_pv_price()
         self.y_pv = self._sample_ypv()
-        self.cost = self._compute_cost()
+        self.base_cost = self._compute_cost()
         # self.gain = self._compute_gain()
         self.beta0 = self.compute_beta0()
 
@@ -61,9 +63,10 @@ class HouseholdAgent:
 
         self.motivation_score = 0.0
         self.adoption_threshold = np.random.uniform(2.5, 4.0)
-        self.social_weight = self._sample_social_weight()
+        # self.social_weight = self._sample_social_weight()
+        self.social_weight = 1.0  
 
-        self.status = "active"  # or deliberate, exit
+        self.status = "active" 
         self.steps_without_adoption = 0
 
         self.postcode6 = postcode6
@@ -71,14 +74,35 @@ class HouseholdAgent:
         self.adoption_track = []
         self.history = []  
 
+    def _categorize_income(self):   
+        low_thres, high_thres = getattr(self.model, "income_quantiles", (20000, 50000))
+
+        if self.income < low_thres:
+            return "low"
+        elif self.income > high_thres:
+            return "high"
+        else:
+            return "mid"
+
+
+    # def compute_Vi(self, timestep=0):
+    #     """Vi = (Y * Gi - Ci) / θ"""
+    #     # raw_V = self.gain - self.lambda_loss_aversion * self.cost
+    #     if not hasattr(self, "gain") or self.gain is None:
+    #         self.gain = self.model.compute_gain_fn(self, timestep)
+
+    #     raw_V = self.Y * self.gain - self.cost
+    #     return raw_V / THETA
+    #     # return raw_V
+
     def compute_Vi(self, timestep=0):
-        """Vi = (Y * Gi - Ci) / θ"""
-        # raw_V = self.gain - self.lambda_loss_aversion * self.cost
-        if not hasattr(self, "gain") or self.gain is None:
-            self.gain = self.model.compute_gain_fn(self, timestep)
-        raw_V = self.Y * self.gain - self.cost
+        """Vi = (Y * Gi - Ci_effective) / θ"""
+        self.gain = self.model.compute_gain_fn(self, timestep)
+    
+        effective_cost = self.model.policy.get_effective_cost(self, timestep)
+    
+        raw_V = self.Y * self.gain - effective_cost
         return raw_V / THETA
-        # return raw_V
 
 
     def compute_Si(self):
@@ -93,23 +117,13 @@ class HouseholdAgent:
 
         return adopted_weight / total_weight if total_weight > 0 else 0
 
-
-    # def _spatial_weight(self, neighbor):
-    #     if self.location_code == neighbor.location_code:
-    #         return 1.0  
-    #     elif self.gemeente_code == neighbor.gemeente_code and self.wijk_code == neighbor.wijk_code:
-    #         return 0.6  
-    #     elif self.gemeente_code == neighbor.gemeente_code:
-    #         return 0.3  
-    #     else:
-    #         return 0.1  
         
 
     
     def compute_beta0(self):
-        """
-        embed structural attributes into agent-specific intercept.
-        """
+        # """
+        # embed structural attributes into agent-specific intercept.
+        # """
         # base = -2.0
         # if self.income is not None:
         #     base += 0.0003 * (self.income - 30000)  # income centered around 30k
@@ -122,8 +136,22 @@ class HouseholdAgent:
         # if self.lihezlek:
         #     base += -0.3
         # return base
-        return np.random.normal(loc=-3.0, scale=0.5)
 
+        """
+        Sample beta₀ from predefined distributions to reflect different preference structures.
+        This can be unimodal (homogeneous) or bimodal (polarized).
+        """
+        dist_type = getattr(self.model, "beta0_dist_type", "unimodal")
+
+        if dist_type == "unimodal":
+            return np.random.normal(loc=-3.0, scale=0.5)
+    
+        elif dist_type == "bimodal":
+            if np.random.rand() < 0.5:
+                return np.random.normal(loc=-4.0, scale=0.3)  # Low-preference group
+            else:
+                return np.random.normal(loc=-2.0, scale=0.3)  # High-preference group
+    
 
 
 
@@ -141,94 +169,67 @@ class HouseholdAgent:
         return prob, V, S, beta0
 
 
-    
+
+    def update_status(self, V, S):
+        if self.status == "active":
+            if np.random.rand() < min(1.0, self.steps_without_adoption / 6):
+            # if self.steps_without_adoption > 5 and S < 0.3:
+                self.status = "hesitant"
+        elif self.status == "hesitant":
+            if S > 0.8 and np.random.rand() < 0.4:
+                self.status = "active"
+                self.steps_without_adoption = 0
+            elif np.random.rand() < min(1.0, self.steps_without_adoption / 15):
+            # if self.steps_without_adoption >= 15:
+                self.status = "exit"
+
+
+
     def step(self, timestep=None):
-        """
-        behavioral logic with accumulation-based adoption (adding inertia mechanism.
-        """
-
-        if self.status == "exit":
-            return  
-
-        if self.adopted:
+        if self.status == "exit" or self.adopted:
             return
-        
-        self.model.policy.apply_to(self, timestep)
 
-        # self.gain = self.model.compute_gain_fn(self, timestep)
+        # # self.model.policy.apply_to(self, timestep)
+        # if not self.policy_applied:
+        #     self.model.policy.apply_to(self, timestep)
 
         prob, V, S, beta0 = self.compute_adoption_probability(timestep)
         self.history.append(prob)
 
-        # # accumulate motivation with decay (λ = 0.8)
-        # self.motivation_score = 0.8 * self.motivation_score + prob
 
-        # # adoption decision by threshold
-        # if self.motivation_score >= self.adoption_threshold:
-        #     self.adopted = True
-        #     self.adoption_time = timestep
+        if self.status == "active":
+            if np.random.rand() < prob:
+                self.adopted = True
+                self.adoption_time = timestep
+        elif self.status == "hesitant":
+            if np.random.rand() < prob * 0.6:  
+                self.adopted = True
+                self.adoption_time = timestep
 
-        # self.adoption_track.append(self.adopted)
 
-        print(f"[T={timestep}] Agent {self.id} | P={prob:.2f}, Beta0={beta0:.2f}, V={V:.2f}, S={S:.2f}, Score={self.motivation_score:.2f}")
-
-        # Bernoulli trial for adoption
-        if np.random.rand() < prob:
-            self.adopted = True
-            self.adoption_time = timestep
+        self.adoption_track.append(self.adopted)
 
         if not self.adopted:
             self.steps_without_adoption += 1
+            self.update_status(V, S)
 
-            if self.status == "active" and self.steps_without_adoption >= 5:
-                self.status = "deliberate"
-
-            elif self.status == "deliberate":
-                S = self.compute_Si()
-                if S > 0.4 and np.random.rand() < 0.7:
-                    self.status = "exit"
-        else:
-            self.steps_without_adoption = 0
+        print(f"[T={timestep}] Agent {self.id} | P={prob:.2f}, V={V:.2f}, S={S:.2f}, β0={beta0:.2f}, Status={self.status}")
 
 
+        #     # if self.status == "active" and self.steps_without_adoption >= 5:
+        #     #     self.status = "hesitant"
 
+        #     # elif self.status == "hesitant":
+        #     #     S = self.compute_Si()
+        #     #     if S > 0.4 and np.random.rand() < 0.7:
+        #     #         self.status = "exit"
+                
 
-    # def apply_policy(self, timestep=None):
-    #     if self.adopted or self.policy_applied:
-    #         return  
-
-    #     policy = self.model.policy_dict
-    #     strategy = policy.get("strategy_tag", "")
-
-    #     if strategy == "reduce_cost":
-    #         self.cost *= 0.8  
-
-    #     elif strategy == "no_policy":
-    #         pass
-
-    #     self.policy_applied = True
-
-    # def apply_policy(self, timestep=None):
-    #     if self.adopted or self.policy_applied:
-    #         return
-
-    #     policy = self.model.policy 
-    #     policy.apply_to(self, timestep)
-
-    #     self.policy_applied = True
 
 
     def _label_to_score(self, label):
         mapping = {'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7}
         return mapping.get(label.upper(), 4)
-
-    # # feed-in tariff may be added later
-    # def _compute_gain(self, eta=0.9):
-    #     return eta * self.elek * self.elec_price
-
-    # def _compute_cost(self, C0=3000, alpha=0.1): #c0 will be updated later in the dataset
-    #     normalized_score = (self.label_score - 1) / 6  # ∈[0, 1]
-    #     return C0 * (1 + alpha * normalized_score)
 
 
     def _sample_system_size(self):
@@ -252,46 +253,25 @@ class HouseholdAgent:
         """
         return self.system_size * self.pv_price
 
-    # def _compute_gain(self):
-    #     """
-    #     Gain = 
-    #     if Ei_gen ≤ ELEK: ELEK * P_elek
-    #     else: ELEK * P_elek + surplus * P_feed
-    #     """
-    #     Ei_gen = self.system_size * self.y_pv
-    #     self.gen_electricity = Ei_gen
-
-    #     elec_price = self.elec_price  # €/kWh
-    #     feed_in_tariff = 0.10 
-
-    #     if self.elek is None:
-    #         self.elek = 2500  # fallback default
-
-    #     if Ei_gen <= self.elek:
-    #         return Ei_gen * elec_price
-    #     else:
-    #         saved = self.elek * elec_price
-    #         surplus = Ei_gen - self.elek
-    #         exported = surplus * feed_in_tariff
-    #         return saved + exported
 
     def _infer_Y(self):
-        base_Y = 3
+        base_Y = 4
         if self.income is not None:
             if self.income < 20000:
                 base_Y -= 1
             elif self.income > 55000:
                 base_Y += 2
         if self.lihe:
-            base_Y -= 1.5
-        return np.clip(base_Y + np.random.normal(0, 1), 2, 6)
+            base_Y -= 1
+        return np.clip(base_Y + np.random.normal(0, 0.5), 2, 6)
 
-    def _sample_social_weight(self):
-        dist_params = {
-            "with_kids": (1.2, 0.1),
-            "couple_no_kids": (1.0, 0.1),
-            "single": (0.8, 0.1),
-            "single_parent": (0.9, 0.1)
-        }
-        mu, sigma = dist_params.get(self.household_type, (1.0, 0.1))
-        return np.clip(np.random.normal(mu, sigma), 0.3, 2.0)
+    # def _sample_social_weight(self):
+    #     dist_params = {
+    #         "with_kids": (1.2, 0.1),
+    #         "couple_no_kids": (1.0, 0.1),
+    #         "single": (0.8, 0.1),
+    #         "single_parent": (0.9, 0.1)
+    #     }
+    #     mu, sigma = dist_params.get(self.household_type, (1.0, 0.1))
+    #     return np.clip(np.random.normal(mu, sigma), 0.5, 1.5)
+

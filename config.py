@@ -8,14 +8,14 @@ import pandas as pd
 
 # n_agents = compute_n_agents()
 
-n_agents = 1000
-n_steps = 40
+n_agents = 2500
+n_steps = 20
 
 
-beta1_range = [0.2, 0.4, 0.6, 0.8, 1.0]
-beta2_range = [0.5, 1.0, 1.5, 2.0]
+beta1_range = [0.2, 0.6, 1.0, 1.4, 1.8]
+beta2_range = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
 
-beta = [0.2, 0.8]  # β₁, β₂
+beta = [1.2, 0]  # β₁, β₂
 
 THETA = 2000
 

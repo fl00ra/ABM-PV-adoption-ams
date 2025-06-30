@@ -10,7 +10,7 @@ for b1, b2 in beta_grid:
     model = ABM(
         n_agents=n_agents,
         beta=[b1, b2],
-        behavior_mode="behavioral_push",
+        behavior_mode="no_policy",
         k_small_world=k_small_world,
         net_level=net_level
     )
