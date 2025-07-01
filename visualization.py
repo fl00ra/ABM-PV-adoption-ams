@@ -103,24 +103,24 @@ def plot_adoption_by_group(models_by_behavior):
 #     plt.close()
 
 
-def plot_status_transitions(models_by_behavior):
-    fig, axs = plt.subplots(1, len(models_by_behavior), figsize=(6 * len(models_by_behavior), 5))
-    if len(models_by_behavior) == 1:
-        axs = [axs]
+# def plot_status_transitions(models_by_behavior):
+#     fig, axs = plt.subplots(1, len(models_by_behavior), figsize=(6 * len(models_by_behavior), 5))
+#     if len(models_by_behavior) == 1:
+#         axs = [axs]
 
-    for ax, (name, model) in zip(axs, models_by_behavior.items()):
-        for status, series in model.results["status_transitions"].items():
-            time_series = [series.get(t, 0) for t in range(len(model.results["adoption_rate"]))]
-            ax.plot(time_series, label=status)
-        ax.set_title(f"Status Transition - {name}")
-        ax.set_xlabel("Time Step")
-        ax.set_ylabel("Fraction of Agents")
-        ax.grid(True)
-        ax.legend()
+#     for ax, (name, model) in zip(axs, models_by_behavior.items()):
+#         for status, series in model.results["status_transitions"].items():
+#             time_series = [series.get(t, 0) for t in range(len(model.results["adoption_rate"]))]
+#             ax.plot(time_series, label=status)
+#         ax.set_title(f"Status Transition - {name}")
+#         ax.set_xlabel("Time Step")
+#         ax.set_ylabel("Fraction of Agents")
+#         ax.grid(True)
+#         ax.legend()
 
-    plt.tight_layout()
-    plt.savefig("result/nxincome/status_transitions.png")
-    plt.close()
+#     plt.tight_layout()
+#     plt.savefig("result/nxincome/status_transitions.png")
+#     plt.close()
 
 def plot_distributions(models_by_behavior):
     for name, model in models_by_behavior.items():

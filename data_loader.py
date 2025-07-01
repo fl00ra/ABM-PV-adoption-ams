@@ -95,7 +95,7 @@ def load_amsterdam_data(max_agents=n_agents):
             hh_type = all_types[i % len(all_types)]
             income = max(10000, sample_income(hh_type))
             energielabel = random.choices(list("ABCDEFG"), weights=[0.15, 0.2, 0.25, 0.2, 0.1, 0.07, 0.03])[0]
-            adopted = random.random() < 0.2
+            adopted = random.random() < 0.01
 
             agent = {
                 "id": agent_id,
