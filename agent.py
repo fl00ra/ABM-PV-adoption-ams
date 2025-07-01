@@ -22,8 +22,7 @@ class HouseholdAgent:
         self.income_level = self._categorize_income()
         self.adopted = adopted
         self.is_targeted = False
-        # self.policy_applied = False
-        # self._effective_cost = None
+
 
         # spatial location 
         # self.location_code = location_code  # GWBCODEJJJJ
@@ -42,7 +41,6 @@ class HouseholdAgent:
 
         self.household_type = household_type
         # self.household_type_vector = household_type_map.get(household_type, [0, 0, 0])
-        # self.bbihj = bbihj
 
         self.system_size = self._sample_system_size()
         self.pv_price = self._sample_pv_price()
@@ -95,13 +93,22 @@ class HouseholdAgent:
     #     return raw_V / THETA
     #     # return raw_V
 
+    # def compute_Vi(self, timestep=0):
+    #     """Vi = (Y * Gi - Ci_effective) / θ"""
+    #     self.gain = self.model.compute_gain_fn(self, timestep)
+    
+    #     effective_cost = self.model.policy.get_effective_cost(self, timestep)
+    
+    #     raw_V = self.Y * self.gain - effective_cost
+    #     return raw_V / THETA
     def compute_Vi(self, timestep=0):
-        """Vi = (Y * Gi - Ci_effective) / θ"""
-        self.gain = self.model.compute_gain_fn(self, timestep)
+        """Vi = (NPVi - Ci_effective) / θ"""
+
+        self.gain = self.model.compute_gain_fn(self, timestep)  
     
         effective_cost = self.model.policy.get_effective_cost(self, timestep)
     
-        raw_V = self.Y * self.gain - effective_cost
+        raw_V = self.gain - effective_cost  
         return raw_V / THETA
 
 
@@ -267,14 +274,4 @@ class HouseholdAgent:
         if self.lihe:
             base_Y -= 1
         return np.clip(base_Y + np.random.normal(0, 0.5), 2, 6)
-
-    # def _sample_social_weight(self):
-    #     dist_params = {
-    #         "with_kids": (1.2, 0.1),
-    #         "couple_no_kids": (1.0, 0.1),
-    #         "single": (0.8, 0.1),
-    #         "single_parent": (0.9, 0.1)
-    #     }
-    #     mu, sigma = dist_params.get(self.household_type, (1.0, 0.1))
-    #     return np.clip(np.random.normal(mu, sigma), 0.5, 1.5)
 

@@ -25,7 +25,7 @@ def plot_adoption_rate(results_by_behavior):
     plt.grid(True)
     plt.legend()
     plt.tight_layout()
-    plt.savefig("result/nxincome/adoption_rate.png")
+    plt.savefig("result/npv/adoption_rate.png")
     plt.close()
 
 
@@ -39,7 +39,7 @@ def plot_new_adopters(results_by_behavior):
     plt.grid(True)
     plt.legend()
     plt.tight_layout()
-    plt.savefig("result/nxincome/new_adopters.png")
+    plt.savefig("result/npv/new_adopters.png")
     plt.close()
 
 
@@ -76,7 +76,7 @@ def plot_adoption_by_group(models_by_behavior):
         ax.legend()
 
     plt.tight_layout()
-    plt.savefig("result/nxincome/adoption_by_group_with_ci.png")
+    plt.savefig("result/npv/adoption_by_group_with_ci.png")
     plt.close()
 
 
@@ -135,10 +135,10 @@ def plot_distributions(models_by_behavior):
             plt.ylabel("Density")
             plt.legend()
             plt.tight_layout()
-            plt.savefig(f"result/nxincome/dist_{var}_{name}.png")
+            plt.savefig(f"result/npv/dist_{var}_{name}.png")
             plt.close()
 
-def plot_network(model, steps_to_plot=[0, 5, 10, 20, 30], save_dir="result/nxincome", label=""):
+def plot_network(model, steps_to_plot=[0, 5, 10, 20, 30], save_dir="result/npv", label=""):
     """
     Plots the network at specific time steps with color showing adoption.
     """
@@ -161,7 +161,7 @@ def plot_network(model, steps_to_plot=[0, 5, 10, 20, 30], save_dir="result/nxinc
 
 
 
-def plot_beta(beta_grid, final_adoptions, save_path="result/nxincome/beta_contour.png"):
+def plot_beta(beta_grid, final_adoptions, save_path="result/npv/beta_contour.png"):
     beta1_vals = sorted(set(b1 for b1, _ in beta_grid))
     beta2_vals = sorted(set(b2 for _, b2 in beta_grid))
 
@@ -190,7 +190,7 @@ def plot_beta(beta_grid, final_adoptions, save_path="result/nxincome/beta_contou
     plt.savefig(save_path, dpi=300)
     plt.close()
 
-def plot_degree_distribution(agents, save_path="result/nxincome/degree_distribution.png"):
+def plot_degree_distribution(agents, save_path="result/npv/degree_distribution.png"):
     """
     Plots the histogram of node degrees in the social network.
     """
@@ -277,7 +277,7 @@ def export_agents_for_mapping(model, filepath):
 #     plt.show()
     
 
-def compare_structure_behavior(models_by_structure, save_path="result/nxincome/structure_behavior_comparison.png"):
+def compare_structure_behavior(models_by_structure, save_path="result/npv/structure_behavior_comparison.png"):
     """
     Compare beta₀ distributions and corresponding adoption curves in one figure.
     Each column = one preference structure (e.g., unimodal vs bimodal)

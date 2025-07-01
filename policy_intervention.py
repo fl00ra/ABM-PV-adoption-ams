@@ -131,18 +131,18 @@ class Policy:
 
 
 
-def compute_gain(agent, timestep, policy: Policy):
-    Ei_gen = agent.system_size * agent.y_pv
-    E_use = min(Ei_gen, agent.elek)
-    E_export = max(0, Ei_gen - agent.elek)
+# def compute_gain(agent, timestep, policy: Policy):
+#     Ei_gen = agent.system_size * agent.y_pv
+#     E_use = min(Ei_gen, agent.elek)
+#     E_export = max(0, Ei_gen - agent.elek)
 
-    p_elek = agent.elec_price
-    p_feed = policy.get_feed_in_tariff(timestep)
+#     p_elek = agent.elec_price
+#     p_feed = policy.get_feed_in_tariff(timestep)
 
-    saving = E_use * p_elek
-    export = E_export * p_feed
+#     saving = E_use * p_elek
+#     export = E_export * p_feed
 
-    return saving + export
+#     return saving + export
 
 
 
@@ -164,3 +164,36 @@ def compute_gain(agent, timestep, policy: Policy):
 #         npv += cashflow / ((1 + r) ** t)  # discount future gains
 
 #     return npv
+
+def compute_gain(agent, timestep, policy: Policy, T=25):
+    """
+    Compute Net Present Value (NPV) of PV system gains over T years.
+    """
+    Ei_gen = agent.system_size * agent.y_pv      # annual generation (kWh)
+    E_use = min(Ei_gen, agent.elek)              # self-consumed
+    E_export = max(0, Ei_gen - agent.elek)       # fed into grid
+    p_elek = agent.elec_price                    # current retail price
+    
+    discount_rates = {
+        "low": 0.08,   # 低收入群体折现率更高（更看重短期收益）
+        "mid": 0.05,   # 中等收入群体
+        "high": 0.03   # 高收入群体折现率更低（更看重长期收益）
+    }
+    
+    r = discount_rates.get(agent.income_level, 0.05)  # 默认5%
+    
+    npv = 0.0
+    for t in range(T):
+        # 获取未来t年的上网电价（相对于当前timestep）
+        future_timestep = timestep + t
+        feed_price = policy.get_feed_in_tariff(future_timestep)
+        
+        # 计算年度现金流
+        saving = E_use * p_elek      # 节省的电费
+        export = E_export * feed_price  # 售电收入
+        annual_cashflow = saving + export
+        
+        # 折现到现值
+        npv += annual_cashflow / ((1 + r) ** t)
+    
+    return npv

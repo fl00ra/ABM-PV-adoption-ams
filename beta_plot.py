@@ -1,4 +1,4 @@
-from model_simple import ABM
+from model import ABM
 from config import n_agents, n_steps, k_small_world, net_level, beta1_range, beta2_range
 from visualization import plot_beta
 

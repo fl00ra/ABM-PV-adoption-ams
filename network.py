@@ -1,6 +1,6 @@
 import random
 from collections import defaultdict
-from agent_simple import HouseholdAgent
+from agent import HouseholdAgent
 import networkx as nx
 import numpy as np
 
