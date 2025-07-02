@@ -20,7 +20,7 @@ class ABM:
 
         self.n_agents = n_agents
         self.beta = beta
-        self.policy = Policy(elec_price=0.4, behavior_mode=behavior_mode, enable_feed_change=enable_feed_change)
+        self.policy = Policy(behavior_mode=behavior_mode, enable_feed_change=enable_feed_change)
         self.k_small_world = k_small_world
         self.net_level = net_level
         self.beta0_dist_type = beta0_dist_type 
@@ -30,6 +30,7 @@ class ABM:
         self.n_agents = min(self.n_agents, len(self.agent_data))
         self.agents = self._init_agents()
         self.compute_gain_fn = lambda agent, t: compute_gain(agent, t, self.policy)
+
 
 
         self.nx_graph = build_net(
@@ -56,7 +57,9 @@ class ABM:
                 "V": [],
                 "S": [],
                 "P": []
-            }
+            },
+            "elec_price": []
+
         }
     def get_dynamic_elec_price(self, timestep):
         return dynamic_elec_price(timestep)
@@ -70,7 +73,7 @@ class ABM:
                 income=d["income"],
                 energielabel=d.get("energielabel"),
                 elek_usage=d.get("elek_usage"),
-                elec_price=d.get("elec_price"),
+                elec_price=None,
                 household_type=d.get("household_type", "single"),
                 postcode6=d.get("postcode6"),
                 buurt_code=d.get("buurt_code"),

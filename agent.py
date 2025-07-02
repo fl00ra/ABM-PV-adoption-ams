@@ -1,6 +1,9 @@
 import numpy as np
-from config import THETA
+# from config import THETA
 from scipy.stats import truncnorm
+from network_geo import compute_spatial_social_influence
+from data_loader import dynamic_elec_price
+
 
 class HouseholdAgent:
     def __init__(self, agent_id, model,
@@ -82,6 +85,8 @@ class HouseholdAgent:
         else:
             return "mid"
 
+    def get_current_elec_price(self, timestep):
+        return dynamic_elec_price(timestep)
 
     # def compute_Vi(self, timestep=0):
     #     """Vi = (Y * Gi - Ci) / θ"""
@@ -102,29 +107,31 @@ class HouseholdAgent:
     #     raw_V = self.Y * self.gain - effective_cost
     #     return raw_V / THETA
     def compute_Vi(self, timestep=0):
-        """Vi = (NPVi - Ci_effective) / θ"""
+        """Vi = NPVi - Ci_effective"""
 
         self.gain = self.model.compute_gain_fn(self, timestep)  
     
         effective_cost = self.model.policy.get_effective_cost(self, timestep)
     
         raw_V = self.gain - effective_cost  
-        return raw_V / THETA
+        return raw_V
 
 
+    # def compute_Si(self):
+    #     adopted_weight = 0
+    #     total_weight = 0
+
+    #     for neighbor in self.neighbors:
+    #         w = neighbor.social_weight
+    #         if neighbor.adopted:
+    #             adopted_weight += w
+    #         total_weight += w
+
+    #     base_si = adopted_weight / total_weight if total_weight > 0 else 0
+    #     return base_si ** 1.5
     def compute_Si(self):
-        adopted_weight = 0
-        total_weight = 0
-
-        for neighbor in self.neighbors:
-            w = neighbor.social_weight
-            if neighbor.adopted:
-                adopted_weight += w
-            total_weight += w
-
-        return adopted_weight / total_weight if total_weight > 0 else 0
-
-        
+        # base on spatial social influence
+        return compute_spatial_social_influence(self)
 
     
     def compute_beta0(self):
@@ -155,11 +162,9 @@ class HouseholdAgent:
     
         elif dist_type == "bimodal":
             if np.random.rand() < 0.5:
-                return np.random.normal(loc=-4.0, scale=0.3)  # Low-preference group
+                return np.random.normal(loc=-5.5, scale=0.3)  # Low-preference group
             else:
-                return np.random.normal(loc=-2.0, scale=0.3)  # High-preference group
-    
-
+                return np.random.normal(loc=-3.5, scale=0.3)  # High-preference group
 
 
     def compute_adoption_probability(self, timestep=0):

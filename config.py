@@ -9,19 +9,19 @@ import numpy as np
 
 # n_agents = compute_n_agents()
 
-n_agents = 2500
-n_steps = 25
+n_agents = 5000
+n_steps = 30
 
 
 # beta1_range = [0.2, 0.6, 1.0, 1.4, 1.8, 2.2]
 # beta2_range = [0.7, 1.4, 2.1, 2.8, 2., 3.0]
 
-beta1_range = np.linspace(0.2, 2.2, num=9) 
-beta2_range = np.linspace(2.0, 8.0, num=11) 
+beta1_range = np.linspace(0.0002, 0.0015, num=9) 
+beta2_range = np.linspace(2.0, 6.0, num=10) 
 
-beta = [0.2, 5.5]  # β₁, β₂
+beta = [0.0002, 5]  # β₁, β₂
 
-THETA = 2000
+# THETA = 1000
 
 
 k_small_world = 2

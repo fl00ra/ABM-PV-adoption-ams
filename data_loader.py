@@ -4,9 +4,7 @@ import random
 from config import n_agents
 
 
-path = "Processed_ams_pc6_buurt_data.csv"
-income_df = pd.read_csv("Distribution of standardised income, 2022.csv")
-
+path = "data_for_import_geo.csv"
 income_df = pd.read_csv("Distribution of standardised income, 2022.csv")
 
 income_df = income_df.rename(columns={
@@ -46,9 +44,9 @@ def sample_income(hh_type):
 
 
 def dynamic_elec_price(timestep):
-    base_price = 0.45  # 2022
-    min_price = 0.25   
-    decline_per_year = 0.03  
+    base_price = 0.3  
+    min_price = 0.2   
+    decline_per_year = 0.01 
 
     price = base_price - decline_per_year * timestep
     return max(min_price, price)
@@ -62,16 +60,18 @@ def get_income_quantiles(agents):
 
 def load_amsterdam_data(max_agents=n_agents):
     df = pd.read_csv(path)
-    df = df.drop_duplicates(subset=["postcode6", "buurt_code"])
+    df = df.drop_duplicates(subset=["postcode", "buurtcode"])
+    
+    df = df.dropna(subset=["total_households"])
 
     agents = []
     agent_id = 0
 
     for _, row in df.iterrows():
         total = int(row["total_households"])
-        postcode6 = row["postcode6"]
-        buurt_code = row["buurt_code"]
-        elek_usage_total = row["elek_usage"]
+        postcode6 = row["postcode"]
+        buurt_code = row["buurtcode"]
+        # elek_usage_total = row["elek_usage"]
 
         hh_types = {
             "single": int(row["single"]),
@@ -84,7 +84,10 @@ def load_amsterdam_data(max_agents=n_agents):
         vulnerable_flags = [1]*vulnerable_count + [0]*(total - vulnerable_count)
         random.shuffle(vulnerable_flags)
 
-        elek_usage_hh = np.random.dirichlet(np.ones(total)) * elek_usage_total
+        # elek_usage_hh = np.random.dirichlet(np.ones(total)) * elek_usage_total
+        elek_usage_hh = np.random.normal(loc=2800, scale=500, size=total)
+        elek_usage_hh = np.clip(elek_usage_hh, 1000, None)  
+
 
         all_types = []
         for t, n in hh_types.items():
@@ -95,14 +98,14 @@ def load_amsterdam_data(max_agents=n_agents):
             hh_type = all_types[i % len(all_types)]
             income = max(10000, sample_income(hh_type))
             energielabel = random.choices(list("ABCDEFG"), weights=[0.15, 0.2, 0.25, 0.2, 0.1, 0.07, 0.03])[0]
-            adopted = random.random() < 0.01
+            adopted = random.random() < 0.001
 
             agent = {
                 "id": agent_id,
                 "income": income,
                 "energielabel": energielabel,
                 "elek_usage": elek_usage_hh[i],
-                "elec_price": dynamic_elec_price(timestep=0),  
+                "elec_price": None,  
                 "household_type": hh_type,
                 "postcode6": postcode6,
                 "buurt_code": buurt_code,
