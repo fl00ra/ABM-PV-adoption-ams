@@ -180,7 +180,7 @@ def plot_beta(beta_grid, final_adoptions, save_path="result/npv/beta_contour.png
 
     plt.colorbar(cp, label='Final Adoption Rate')
     plt.xlabel("Beta 2 (Social Influence Weight)", fontsize=12)
-    plt.ylabel("Beta 1 (Economic Rationality Weight)", fontsize=12)
+    plt.ylabel("Beta 1 (Cost Benefit Weight)", fontsize=12)
     plt.title("Adoption Rate across Beta Parameters", fontsize=14)
     plt.xticks(beta2_vals)
     plt.yticks(beta1_vals)

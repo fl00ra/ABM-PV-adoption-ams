@@ -1,7 +1,8 @@
+from data_loader import dynamic_elec_price
+
 class Policy:
-    def __init__(self, elec_price=0.4, 
-                 behavior_mode="universal_nudge", enable_feed_change=True):
-        self.elec_price = elec_price
+    def __init__(self, behavior_mode="universal_nudge", enable_feed_change=True):
+        # self.elec_price = elec_price
         self.behavior_mode = behavior_mode
         self.enable_feed_change = enable_feed_change
 
@@ -41,20 +42,25 @@ class Policy:
             }
 
         }
-    def get_feed_in_tariff(self, timestep):
+    def get_feed_in_tariff(self, timestep, current_elec_price=None):
+
         if not self.enable_feed_change:
             return 0.0  
 
-    # stage 1: net metering (early)
-        if timestep < 5:
-            return self.elec_price
+        if current_elec_price is None:
+            from data_loader import dynamic_elec_price
+            current_elec_price = dynamic_elec_price(timestep)
 
-    # stage 2: declining subsidy
-        elif timestep < 15:
+        # stage 1: net metering (early)
+        if timestep < 3:
+            return current_elec_price
+
+        # stage 2: declining subsidy
+        elif timestep < 7:
             reduction_factor = max(0.05, 1.0 - 0.09 * (timestep - 5))
-            return self.elec_price * reduction_factor
+            return current_elec_price * reduction_factor
 
-    # stage 3: fixed market price
+        # stage 3: fixed market price
         else:
             return 0.10
 
@@ -165,35 +171,97 @@ class Policy:
 
 #     return npv
 
-def compute_gain(agent, timestep, policy: Policy, T=25):
-    """
-    Compute Net Present Value (NPV) of PV system gains over T years.
-    """
-    Ei_gen = agent.system_size * agent.y_pv      # annual generation (kWh)
-    E_use = min(Ei_gen, agent.elek)              # self-consumed
-    E_export = max(0, Ei_gen - agent.elek)       # fed into grid
-    p_elek = agent.elec_price                    # current retail price
+# def compute_gain(agent, timestep, policy: Policy, T=20):
+#     """
+#     Compute Net Present Value (NPV) of PV system gains over T years.
+#     """
+#     Ei_gen = agent.system_size * agent.y_pv      # annual generation (kWh)
+#     E_use = min(Ei_gen, agent.elek)              # self-consumed
+#     E_export = max(0, Ei_gen - agent.elek)       # fed into grid
+#     p_elek = agent.elec_price                    # current retail price
+    
+#     discount_rates = {
+#         "low": 0.08,   # 低收入群体折现率更高（更看重短期收益）
+#         "mid": 0.05,   # 中等收入群体
+#         "high": 0.03   # 高收入群体折现率更低（更看重长期收益）
+#     }
+    
+#     r = discount_rates.get(agent.income_level, 0.05)  # 默认5%
+    
+#     npv = 0.0
+#     for t in range(T):
+#         # 获取未来t年的上网电价（相对于当前timestep）
+#         future_timestep = timestep + t
+#         feed_price = policy.get_feed_in_tariff(future_timestep)
+        
+#         # 计算年度现金流
+#         saving = E_use * p_elek      # 节省的电费
+#         export = E_export * feed_price  # 售电收入
+#         annual_cashflow = saving + export
+        
+#         # 折现到现值
+#         npv += annual_cashflow / ((1 + r) ** t)
+    
+#     return npv
+
+
+def compute_gain(agent, timestep, policy: Policy, T=20):
+
+    degradation_rate = 0.005  # 0.5% annual degradation
+
+  
+    base_Ei_gen = agent.system_size * agent.y_pv 
+
+    # Ei_gen = Ei_gen * (1 - degradation_rate) ** t
+    # E_use = min(Ei_gen, agent.elek)
+    # E_export = max(0, Ei_gen - agent.elek)
+    current_elec_price = agent.get_current_elec_price(timestep)
     
     discount_rates = {
-        "low": 0.08,   # 低收入群体折现率更高（更看重短期收益）
-        "mid": 0.05,   # 中等收入群体
-        "high": 0.03   # 高收入群体折现率更低（更看重长期收益）
+        "low": 0.08,
+        "mid": 0.05,
+        "high": 0.03
     }
+    r = discount_rates.get(agent.income_level, 0.07)
     
-    r = discount_rates.get(agent.income_level, 0.05)  # 默认5%
+    # maintenance cost
+    annual_maintenance = agent.system_size * 15  # 15euro/kWp/year
+    inverter_replacement = agent.system_size * 300  # 300euro/kWp
     
     npv = 0.0
-    for t in range(T):
-        # 获取未来t年的上网电价（相对于当前timestep）
-        future_timestep = timestep + t
-        feed_price = policy.get_feed_in_tariff(future_timestep)
-        
-        # 计算年度现金流
-        saving = E_use * p_elek      # 节省的电费
-        export = E_export * feed_price  # 售电收入
-        annual_cashflow = saving + export
-        
-        # 折现到现值
-        npv += annual_cashflow / ((1 + r) ** t)
     
-    return npv
+    for t in range(T):
+        future_timestep = timestep + t
+        
+        future_elec_price = agent.get_current_elec_price(future_timestep)
+
+        feed_price = policy.get_feed_in_tariff(future_timestep)
+
+        Ei_gen_year = base_Ei_gen * (1 - degradation_rate) ** t
+        
+        E_use = min(Ei_gen_year, agent.elek)
+        E_export = max(0, Ei_gen_year - agent.elek)
+        
+        # annual gain
+        saving = E_use * future_elec_price
+        export = E_export * feed_price
+        annual_revenue = saving + export
+        
+        # annual maintenance cost
+        if t < 10:
+            maintenance_cost = annual_maintenance
+        elif t < 15:
+            maintenance_cost = annual_maintenance * 1.2
+        else:
+            maintenance_cost = annual_maintenance * 1.5
+        
+        net_cashflow = annual_revenue - maintenance_cost
+        
+        # inverter replacement cost
+        if t == 12:
+            net_cashflow -= inverter_replacement
+            
+        
+        npv += net_cashflow / ((1 + r) ** t)
+    
+    return npv  
